@@ -1,3 +1,4 @@
+import { env } from 'cloudflare:workers'
 import { ImageResponse, loadGoogleFont } from 'workers-og'
 import { getPostBySlug } from '../content/blog'
 import { getWorkBySlug } from '../content/works'
@@ -55,9 +56,7 @@ let logoCache: string | null = null
 async function getLogoDataUrl(request: Request): Promise<string> {
   if (logoCache) return logoCache
   const url = new URL('/images/trasta.png', request.url)
-  const res = await fetch(url, {
-    headers: { 'User-Agent': 'Mozilla/5.0' },
-  })
+  const res = await env.ASSETS.fetch(url)
   if (!res.ok) throw new Error(`logo fetch failed: ${res.status}`)
   const buf = await res.arrayBuffer()
   logoCache = `data:image/png;base64,${arrayBufferToBase64(buf)}`
