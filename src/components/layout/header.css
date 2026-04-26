@@ -1,0 +1,94 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  background: color-mix(in oklab, var(--bg) 85%, transparent);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.85rem, 2.2vw, 1.7rem);
+}
+
+.site-nav__link {
+  --eff-rot: 45deg;
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background-image: none;
+  padding: 0.35rem 0.15rem;
+  letter-spacing: -0.005em;
+  transition: color 220ms ease;
+  isolation: isolate;
+}
+
+.site-nav__link::before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  top: -2px;
+  right: -3px;
+  background: url("/images/effect-orange-bounce.png") center/contain no-repeat;
+  opacity: 0;
+  transform: scale(0.4) rotate(var(--eff-rot));
+  pointer-events: none;
+}
+
+.site-nav__link:hover {
+  color: var(--ink);
+}
+
+.site-nav__link:hover::before {
+  animation: hero-pop 540ms var(--ease-soft) both;
+}
+
+
+.site-nav__link.is-active {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.site-nav__link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0.05em;
+  right: 0.05em;
+  bottom: 0.35rem;
+  height: 0.16em;
+  background: var(--warm-orange);
+  border-radius: 1px;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  /* mobile では sticky を解除して読書領域を確保。
+     ナビにはトップまでスクロールアップで戻る */
+  .site-header {
+    position: static;
+  }
+  .site-header__inner {
+    flex-wrap: wrap;
+  }
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    padding-top: 0.25rem;
+    gap: 1.2rem;
+  }
+}

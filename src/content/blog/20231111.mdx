@@ -1,0 +1,229 @@
+---
+title: "ホバーで回転・クリックで逆回転するCSS"
+description: "ホバーで右回転、クリックで逆回転する CSS を、checkbox と二重 animation で実現する話。"
+publishedAt: "2023-11-12"
+tags: ["CSS"]
+---
+
+[このサイトのトップページ](/)のように、ホバーで右(左)回転、クリックで回転の向きが逆になるCSSを書きたいという話です。
+
+## とりあえず書いてみる
+
+そんなのすぐできそうなものですが、まぁとりあえず書いてみましょう。  
+以下の例は画像をホバー時に回す例です。デフォルトをpausedにしてホバーした際にrunningにします。
+
+```html
+<img src="itika.jpg" class="image-circle">
+
+<style>
+  .image-circle {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+```
+
+↓このようになります。ちゃんと動いていますね。
+
+<div style={{ marginBottom: '20px' }}>
+  <img 
+    src="https://pbs.twimg.com/profile_images/1580310643462508544/jZ-YewL1_400x400.jpg"
+    className="image-circle-2" />
+</div>
+<style>
+  {`
+  .image-circle-2 {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle-2:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  `}
+</style>
+
+ではクリックした際に逆回転にしてみましょう。今回はcheckboxを使用して、クリックした状態かの判定を行って回転の方向の管理をしようと思います。
+
+```html
+<label>
+  <input type="checkbox" class="checkbox" />
+  <img 
+    src="itika.jpg"
+    class="image-circle" />
+</label>
+
+<style>
+  .image-circle {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle:hover {
+    animation-play-state: running;
+  }
+  .checkbox:checked ~ .image-circle {
+    animation-direction: reverse;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+```
+
+↓このようになります。クリックすると逆回転しますね。
+
+<div style={{ marginBottom: '20px' }}>
+  <label>
+    <input type="checkbox" className="checkbox-3" />
+      <img 
+        src="https://pbs.twimg.com/profile_images/1580310643462508544/jZ-YewL1_400x400.jpg"
+        className="image-circle-3" />
+  </label>
+</div>
+<style>
+  {`
+  .image-circle-3 {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle-3:hover {
+    animation-play-state: running;
+  }
+  .checkbox-3 {
+    display: none;
+  }
+  .checkbox-3:checked ~ .image-circle-3 {
+    animation-direction: reverse;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  `}
+</style>
+
+……？  
+はい、逆回転にはなりますが、クリック時に線対称な位置に移動してしまいます。どうすればよいでしょうか。
+
+## 結論
+
+今回は、親要素にanimationをもう1つ追加することで解決しました。  
+まず、親に想定の2倍の速度で右回転するanimation、子に等倍速で左に回転するanimationを用意します。
+そして、ホバーされた際には両方animationをrunningにし、checkedがtrueの際には右回転のanimationをpausedにします。
+
+こうすることで、両方のアニメーションがrunningの際には、お互いのアニメーションが打ち消し合い、右に等倍速で回転することになります。また、checkedがtrueの際には、右回転のanimationが止まるため、左回転のanimationのみが動作し、左に等倍速で回転することになります。
+
+具体的なコードは以下のようになります。
+
+```html
+<label>
+  <input type="checkbox" class="checkbox" />
+  <div class="image-wrapper">
+    <img 
+      src="itika.jpg"
+      class="image-circle" />
+  </div>
+</label>
+
+<style>
+  .image-wrapper {
+    display: inline-block;
+    animation: rotate-image 1s linear infinite paused;
+  }
+  .image-wrapper:hover {
+    animation-play-state: running;
+  }
+  .checkbox:checked ~ .image-wrapper {
+    animation-play-state: paused;
+  }
+  .image-circle {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused reverse;
+  }
+  .image-circle:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+```
+
+↓このようになります。今度こそクリックするとワープすることなく逆回転しますね。
+
+<div style={{ marginBottom: '20px' }}>
+  <label>
+    <input type="checkbox" className="checkbox-4" />
+      <div className="image-wrapper-4">
+        <img 
+          src="https://pbs.twimg.com/profile_images/1580310643462508544/jZ-YewL1_400x400.jpg"
+          className="image-circle-4" />
+      </div>
+  </label>
+</div>
+<style>
+  {`
+  .image-wrapper-4 {
+    display: inline-block;
+    animation: rotate-image 1s linear infinite paused;
+  }
+  .image-wrapper-4:hover {
+    animation-play-state: running;
+  }
+  .checkbox-4 {
+    display: none;
+  }
+  .checkbox-4:checked ~ .image-wrapper-4 {
+    animation-play-state: paused;
+  }
+  .image-circle-4 {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused reverse;
+  }
+  .image-circle-4:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  `}
+</style>
+
+他に解決方法があれば教えていただけると嬉しいです。

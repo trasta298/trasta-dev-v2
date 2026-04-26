@@ -1,0 +1,36 @@
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--line-soft);
+  background: var(--bg-soft);
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.lang-switcher__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  padding: 0.18rem 0.45rem;
+  border-radius: 999px;
+  color: var(--muted);
+  background-image: none;
+  transition:
+    color 220ms ease,
+    background 220ms ease;
+}
+
+.lang-switcher__btn:hover {
+  color: var(--ink);
+}
+
+.lang-switcher__btn[data-active='true'] {
+  background: var(--ink);
+  color: var(--paper);
+}

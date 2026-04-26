@@ -1,0 +1,285 @@
+.about {
+  padding-top: 1.5rem;
+  max-width: 880px;
+}
+
+.about__head {
+  position: relative;
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.about__title {
+  position: relative;
+  display: inline-block;
+  margin: 0.4rem 0 0.7rem;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1.32;
+}
+
+.about__title-en {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.about__lead {
+  margin: 0;
+  max-width: 36em;
+  color: var(--ink-soft);
+}
+
+.about__profile {
+  position: relative;
+  margin: 2.4rem 0 1.2rem;
+  padding: 1.25rem 1.35rem 1.35rem;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius-md);
+  transition:
+    border-color 360ms var(--ease-soft),
+    transform 460ms var(--ease-soft),
+    box-shadow 460ms var(--ease-soft);
+  isolation: isolate;
+}
+
+.about__profile > h2 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about__profile::before {
+  --eff-rot: 0deg;
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: -10px;
+  right: -8px;
+  background: url("/images/effect-yellow-sparkle.png") center/contain no-repeat;
+  opacity: 0;
+  transform: scale(0.3);
+  pointer-events: none;
+}
+
+.about__profile:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.about__profile:hover::before {
+  animation: hero-pop 720ms var(--ease-soft) both;
+}
+
+.about__profile-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.about__profile-body p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.75;
+  font-size: 0.94rem;
+}
+
+.about__profile-body a {
+  color: var(--accent-strong);
+  font-weight: 600;
+  background-image: none;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 220ms ease;
+}
+
+.about__profile-body a:hover {
+  text-decoration-color: currentColor;
+}
+
+.about__grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 720px) {
+  .about__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .about__grid > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.about__card {
+  position: relative;
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.35rem 1.35rem;
+  transition:
+    border-color 360ms var(--ease-soft),
+    transform 460ms var(--ease-soft),
+    box-shadow 460ms var(--ease-soft);
+  isolation: isolate;
+}
+
+.about__card::before {
+  --eff-rot: 0deg;
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: -10px;
+  right: -8px;
+  background: url("/images/effect-yellow-sparkle.png") center/contain no-repeat;
+  opacity: 0;
+  transform: scale(0.3);
+  pointer-events: none;
+}
+
+.about__card:nth-child(2)::before {
+  background-image: url("/images/effect-mint-sparkle.png");
+}
+
+.about__card:nth-child(3)::before {
+  background-image: url("/images/effect-lavender-sparkle.png");
+}
+
+.about__card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.about__card:hover::before {
+  animation: hero-pop 720ms var(--ease-soft) both;
+}
+
+.about__card h2 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.about__card ul {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 0.96rem;
+  color: var(--ink);
+  line-height: 1.85;
+}
+
+.about__card ul li::marker {
+  color: var(--warm-orange);
+}
+
+.about__chips {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.about__chips li {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transition: border-color 220ms ease, background 220ms ease;
+}
+
+.about__chips li:hover {
+  border-color: var(--ink);
+}
+
+.about__links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 0.96rem;
+}
+
+.about__links a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1.4rem;
+  background-image: none;
+  transition: color 220ms ease;
+}
+
+.about__links a:hover {
+  color: var(--accent-strong);
+}
+
+.about__links a:hover .about__link-key {
+  color: var(--accent-strong);
+}
+
+.about__link-key {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  width: 4.4em;
+  transition: color 220ms ease;
+}
+
+.about__sign {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin-top: 3rem;
+  position: relative;
+}
+
+.about__tail {
+  width: 80px;
+  height: auto;
+  transform-origin: 50% 70%;
+}
+
+.about__sign:hover .about__tail {
+  animation: tail-spin 900ms var(--ease-soft) 1;
+}
+
+:root[data-theme="dark"] .about__tail,
+:root.dark .about__tail {
+  filter: invert(0.94) hue-rotate(-2deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) .about__tail {
+    filter: invert(0.94) hue-rotate(-2deg);
+  }
+}
+
+.about__sig {
+  font-family: var(--font-sans);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink-soft);
+}

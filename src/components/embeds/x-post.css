@@ -1,0 +1,84 @@
+.x-post-embed {
+  margin: 1.6rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.x-post-embed [data-theme] {
+  --tweet-container-margin: 0;
+  --tweet-font-family: var(--font-sans);
+  --tweet-color-blue-primary: var(--accent-strong);
+  --tweet-color-blue-primary-hover: var(--accent-strong);
+  --tweet-color-red-primary: #f43f5e;
+  --tweet-color-red-primary-hover: #f43f5e;
+  --tweet-bg-color: var(--card);
+  --tweet-bg-color-hover: var(--card-hover);
+  --tweet-quoted-bg-color-hover: var(--card-hover);
+  --tweet-color-blue-secondary: var(--accent-strong);
+  --tweet-color-blue-secondary-hover: var(--card-hover);
+  --tweet-font-color: var(--ink);
+  --tweet-font-color-secondary: var(--muted);
+  --tweet-border: 1px solid var(--line);
+  --tweet-skeleton-gradient: linear-gradient(
+    270deg,
+    var(--card),
+    var(--line-soft),
+    var(--line-soft),
+    var(--card)
+  );
+  --tweet-border-radius: var(--radius-md);
+  --tweet-actions-font-weight: 600;
+  --tweet-replies-font-weight: 500;
+  width: min(100%, 560px);
+}
+
+.x-post-embed .react-tweet-theme {
+  margin: 0 !important;
+}
+
+.x-post-embed__fallback {
+  display: block;
+  width: min(100%, 560px);
+  padding: 1rem 1.1rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  color: var(--ink);
+  background-image: none !important;
+  text-decoration: none;
+  transition:
+    border-color 320ms var(--ease-soft),
+    transform 360ms var(--ease-soft),
+    background 320ms var(--ease-soft);
+}
+
+.x-post-embed__fallback:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  background: var(--card-hover);
+}
+
+.x-post-embed__head {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.x-post-embed__icon {
+  width: 14px;
+  height: 14px;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.x-post-embed__cta {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--accent-strong);
+  letter-spacing: 0.04em;
+}

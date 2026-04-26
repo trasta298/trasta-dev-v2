@@ -1,0 +1,49 @@
+.site-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  background-image: none;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  padding: 0.1rem 0.2rem;
+}
+
+.site-mark__title {
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  transition: color 220ms ease;
+}
+
+.site-mark__sub {
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.site-mark::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: -10px;
+  top: -8px;
+  background: url("/images/effect-yellow-sparkle.png") center/contain no-repeat;
+  opacity: 0;
+  transform: scale(0.4) rotate(-15deg);
+  pointer-events: none;
+}
+
+.site-mark:hover .site-mark__title {
+  color: var(--accent-strong);
+}
+
+.site-mark:hover::after {
+  opacity: 1;
+  animation: pop-in 320ms var(--ease-out) both, sparkle-bob 1.8s 320ms infinite;
+}

@@ -1,0 +1,118 @@
+.callout {
+  --callout-tint: var(--tiger-yellow);
+  --callout-sticker: url("/images/effect-yellow-sparkle.png");
+  position: relative;
+  margin: 1.8rem 0;
+  padding: 1.05rem 1.2rem 1.1rem;
+  background: color-mix(in oklab, var(--callout-tint) 10%, var(--bg-soft));
+  border: 1px solid color-mix(in oklab, var(--callout-tint) 36%, var(--line-soft));
+  border-radius: var(--radius-md);
+  isolation: isolate;
+}
+
+.callout--note {
+  --callout-tint: var(--blue-eye);
+  --callout-sticker: url("/images/effect-yellow-sparkle.png");
+}
+
+.callout--tip {
+  --callout-tint: var(--mint);
+  --callout-sticker: url("/images/effect-mint-sparkle.png");
+}
+
+.callout--warn {
+  --callout-tint: var(--warm-orange);
+  --callout-sticker: url("/images/effect-orange-bounce.png");
+}
+
+.callout--kitten {
+  --callout-tint: var(--tiger-yellow);
+  --callout-sticker: url("/images/trasta.png");
+}
+
+/* sticker — box の中、ラベルの左に小さく配置 */
+.callout__sticker {
+  position: absolute;
+  top: 0.85rem;
+  left: 1.1rem;
+  width: 22px;
+  height: 22px;
+  background: var(--callout-sticker) center/contain no-repeat;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+.callout--warn .callout__sticker {
+  transform: rotate(-18deg);
+}
+
+.callout--kitten .callout__sticker {
+  width: 26px;
+  height: 26px;
+  top: 0.7rem;
+  left: 0.95rem;
+  transform: none;
+}
+
+.callout__label {
+  margin: 0 0 0.55rem;
+  padding-left: 2rem;
+  min-height: 22px;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--callout-tint) 50%, var(--ink) 50%);
+}
+
+.callout--kitten .callout__label {
+  padding-left: 2.4rem;
+}
+
+.callout--kitten .callout__label {
+  text-transform: none;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+}
+
+.callout__body {
+  font-size: 0.96rem;
+  line-height: 1.78;
+  color: var(--ink);
+}
+
+.callout__body > :first-child {
+  margin-top: 0;
+}
+
+.callout__body > :last-child {
+  margin-bottom: 0;
+}
+
+.callout__body a:not(.bare) {
+  color: color-mix(in oklab, var(--callout-tint) 60%, var(--ink) 40%);
+}
+
+/* dark時に sticker の影を少し効かせる */
+:root[data-theme="dark"] .callout__sticker,
+:root.dark .callout__sticker {
+  filter: drop-shadow(0 0 4px color-mix(in oklab, var(--callout-tint) 40%, transparent));
+}
+
+/* trasta.png はそのままで使う(反転なし) */
+:root[data-theme="dark"] .callout--kitten .callout__sticker,
+:root.dark .callout--kitten .callout__sticker {
+  filter: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) .callout__sticker {
+    filter: drop-shadow(0 0 4px color-mix(in oklab, var(--callout-tint) 40%, transparent));
+  }
+  :root:not([data-theme="light"]):not(.light) .callout--kitten .callout__sticker {
+    filter: none;
+  }
+}

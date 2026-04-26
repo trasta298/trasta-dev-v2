@@ -1,0 +1,40 @@
+---
+title: "trasta.dev"
+description: "ブログを主役にした個人サイト。TanStack Start + Cloudflare Workers で組み直しました。"
+publishedAt: "2026-04-26"
+tags: ["TanStack Start", "Cloudflare Workers", "MDX", "React"]
+image: "/images/works/_portfolio.png"
+repositoryUrl: "https://github.com/trasta298/trasta-dev-v2"
+websiteUrl: "https://trasta.dev"
+featured: true
+---
+
+いま見ている個人サイトです。元々は Astro + Panda CSS で作っていたものを、ブログをもう少し気持ちよく書き続けられる場にしたくて、ゼロから組み直しました。
+
+## 設計のテーマ
+
+- **本文を邪魔しない**: 余白とタイポグラフィを優先。装飾は要所だけ。
+- **ja / en の二言語**: ブラウザ言語で振り分け、Cookie に保持。記事ごとに ja/en MDX を別管理。
+- **外部ブログも一覧に並べる**: trap.jp や Zenn の記事もブログ index に混ぜて、書いた場所がどこでも一覧でたどれるように。
+- **ちょっとだけ"虎"を出す**: フッターやタイトル横に控えめなモーション素材を散らしています。
+
+## 使った技術
+
+- [TanStack Start](https://tanstack.com/start) (SSR + ファイルベースルーティング)
+- [Cloudflare Workers](https://workers.cloudflare.com/) (デプロイ先 / `server.ts` で言語振り分け)
+- [@mdx-js/rollup](https://mdxjs.com/) + remark-gfm / rehype-shiki (MDX 本文 + 二色シンタックスハイライト)
+- [react-tweet](https://react-tweet.vercel.app/) (X 埋め込みを SWR で軽く)
+- バニラ CSS (Variables + `clamp()` でダーク/ライト両対応)
+
+## ちょっと工夫したところ
+
+- Accept-Language の q 値をパースして、ja を最優先で選ぶ。それ以外はぜんぶ /en/ にリダイレクト
+- `lang` Cookie で切り替えを記憶 (一年)
+- ブログ frontmatter に `externalUrl` を足し、index は `<a target="_blank">`、詳細は 404 にして外部リンクと内部記事を同じ列で扱えるように
+- コードブロックは GitHub の light / dark を両方埋め込み、テーマ切り替え時に CSS 変数で出し分け
+- View Transitions まわりは控えめに、reduced-motion を厳守
+
+## 関連リンク
+
+- [GitHub (current)](https://github.com/trasta298/trasta-dev-v2)
+- [GitHub (旧 Astro 版)](https://github.com/trasta298/trasta-dev)

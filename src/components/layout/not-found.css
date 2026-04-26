@@ -1,0 +1,66 @@
+.not-found {
+  padding-top: clamp(2rem, 6vw, 4rem);
+  padding-bottom: clamp(2rem, 6vw, 4rem);
+  max-width: 720px;
+  text-align: center;
+}
+
+.not-found .kicker {
+  display: inline-block;
+  margin-bottom: 1.4rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.3em;
+}
+
+.not-found__title {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3rem);
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+  margin: 0 0 1rem;
+}
+
+.not-found__title-en {
+  font-style: italic;
+  color: var(--accent-strong);
+}
+
+.not-found__lead {
+  margin: 0 auto 2rem;
+  max-width: 32em;
+  color: var(--ink-soft);
+  line-height: 1.85;
+}
+
+.not-found__cta {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.not-found__tiger {
+  display: flex;
+  justify-content: center;
+  opacity: 0.85;
+}
+
+.not-found__tiger img {
+  width: min(360px, 80%);
+  height: auto;
+}
+
+:root[data-theme="dark"] .not-found__tiger img,
+:root.dark .not-found__tiger img {
+  filter: invert(0.94) hue-rotate(-2deg);
+  opacity: 0.9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) .not-found__tiger img {
+    filter: invert(0.94) hue-rotate(-2deg);
+    opacity: 0.9;
+  }
+}

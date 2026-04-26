@@ -1,0 +1,229 @@
+---
+title: "CSS for Rotating on Hover and Reversing on Click"
+description: "How to make an image rotate clockwise on hover and reverse direction on click, using only CSS."
+publishedAt: "2023-11-12"
+tags: ["CSS"]
+---
+
+This article is about creating CSS that rotates clockwise (or counterclockwise) on hover, and reverses the rotation direction on click, like [this site's homepage](/).
+
+## Let's Try Writing It
+
+This seems straightforward, but let's just write it first.
+The following example rotates an image on hover. We set the default to paused and change it to running on hover.
+
+```html
+<img src="itika.jpg" class="image-circle">
+
+<style>
+  .image-circle {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+```
+
+↓Here's how it looks. It works correctly.
+
+<div style={{ marginBottom: '20px' }}>
+  <img
+    src="https://pbs.twimg.com/profile_images/1580310643462508544/jZ-YewL1_400x400.jpg"
+    className="image-circle-2" />
+</div>
+<style>
+  {`
+  .image-circle-2 {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle-2:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  `}
+</style>
+
+Now let's try reversing the rotation on click. We'll use a checkbox to track the clicked state and manage the rotation direction.
+
+```html
+<label>
+  <input type="checkbox" class="checkbox" />
+  <img
+    src="itika.jpg"
+    class="image-circle" />
+</label>
+
+<style>
+  .image-circle {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle:hover {
+    animation-play-state: running;
+  }
+  .checkbox:checked ~ .image-circle {
+    animation-direction: reverse;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+```
+
+↓Here's how it looks. Click it and it reverses, right?
+
+<div style={{ marginBottom: '20px' }}>
+  <label>
+    <input type="checkbox" className="checkbox-3" />
+      <img
+        src="https://pbs.twimg.com/profile_images/1580310643462508544/jZ-YewL1_400x400.jpg"
+        className="image-circle-3" />
+  </label>
+</div>
+<style>
+  {`
+  .image-circle-3 {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused;
+  }
+  .image-circle-3:hover {
+    animation-play-state: running;
+  }
+  .checkbox-3 {
+    display: none;
+  }
+  .checkbox-3:checked ~ .image-circle-3 {
+    animation-direction: reverse;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  `}
+</style>
+
+...Hmm?
+Yes, it does reverse, but on click it jumps to a mirror-symmetrical position. How can we fix this?
+
+## The Solution
+
+I solved this by adding another animation to the parent element.
+First, we set up an animation on the parent that rotates clockwise at twice the intended speed, and an animation on the child that rotates counterclockwise at normal speed.
+Then, on hover, we set both animations to running, and when checked is true, we pause the clockwise animation.
+
+This way, when both animations are running, they cancel each other out, resulting in clockwise rotation at normal speed. When checked is true, the clockwise animation stops, leaving only the counterclockwise animation, resulting in counterclockwise rotation at normal speed.
+
+Here's the specific code:
+
+```html
+<label>
+  <input type="checkbox" class="checkbox" />
+  <div class="image-wrapper">
+    <img
+      src="itika.jpg"
+      class="image-circle" />
+  </div>
+</label>
+
+<style>
+  .image-wrapper {
+    display: inline-block;
+    animation: rotate-image 1s linear infinite paused;
+  }
+  .image-wrapper:hover {
+    animation-play-state: running;
+  }
+  .checkbox:checked ~ .image-wrapper {
+    animation-play-state: paused;
+  }
+  .image-circle {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused reverse;
+  }
+  .image-circle:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+```
+
+↓Here's how it looks. Now clicking reverses the rotation smoothly without any jumping.
+
+<div style={{ marginBottom: '20px' }}>
+  <label>
+    <input type="checkbox" className="checkbox-4" />
+      <div className="image-wrapper-4">
+        <img
+          src="https://pbs.twimg.com/profile_images/1580310643462508544/jZ-YewL1_400x400.jpg"
+          className="image-circle-4" />
+      </div>
+  </label>
+</div>
+<style>
+  {`
+  .image-wrapper-4 {
+    display: inline-block;
+    animation: rotate-image 1s linear infinite paused;
+  }
+  .image-wrapper-4:hover {
+    animation-play-state: running;
+  }
+  .checkbox-4 {
+    display: none;
+  }
+  .checkbox-4:checked ~ .image-wrapper-4 {
+    animation-play-state: paused;
+  }
+  .image-circle-4 {
+    border-radius: 50%;
+    animation: rotate-image 2s linear infinite paused reverse;
+  }
+  .image-circle-4:hover {
+    animation-play-state: running;
+  }
+  @keyframes rotate-image {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  `}
+</style>
+
+If you know of any other solutions, I'd love to hear about them.

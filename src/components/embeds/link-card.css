@@ -1,0 +1,112 @@
+.link-card {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  margin: 1.4rem 0;
+  background-image: none !important;
+  color: var(--ink);
+  transition:
+    border-color 360ms var(--ease-soft),
+    transform 460ms var(--ease-soft),
+    background 320ms var(--ease-soft),
+    box-shadow 460ms var(--ease-soft);
+}
+
+.link-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.link-card::after {
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  top: -10px;
+  right: -8px;
+  background: url("/images/effect-yellow-sparkle.png") center/contain no-repeat;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 320ms var(--ease-soft), transform 320ms var(--ease-soft);
+  pointer-events: none;
+}
+
+.link-card:hover {
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  background: var(--card-hover);
+  box-shadow: var(--shadow-card);
+}
+
+.link-card:hover::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.link-card__body {
+  flex: 1 1 auto;
+  padding: 0.95rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.link-card__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.link-card__desc {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.link-card__site {
+  margin: 0.2rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+
+.link-card__thumb {
+  width: 140px;
+  flex: 0 0 auto;
+  background: var(--bg-soft);
+  border-left: 1px solid var(--line-soft);
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.link-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 540px) {
+  .link-card__thumb {
+    display: none;
+  }
+}

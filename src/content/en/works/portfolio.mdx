@@ -1,0 +1,40 @@
+---
+title: "trasta.dev"
+description: "A blog-first personal site, rebuilt on TanStack Start and Cloudflare Workers."
+publishedAt: "2026-04-26"
+tags: ["TanStack Start", "Cloudflare Workers", "MDX", "React"]
+image: "/images/works/_portfolio.png"
+repositoryUrl: "https://github.com/trasta298/trasta-dev-v2"
+websiteUrl: "https://trasta.dev"
+featured: true
+---
+
+The site you are looking at now. The previous version was built with Astro + Panda CSS, and i rewrote it from scratch so writing the blog felt a little more natural day-to-day.
+
+## design themes
+
+- **don't get in the way of the writing.** Whitespace and typography first, decoration only at the edges.
+- **bilingual ja / en.** Browser language picks the entry point, a `lang` cookie remembers it. Each post has paired ja/en MDX.
+- **external posts in the same list.** Posts on trap.jp or Zenn live in the same blog index, so the timeline is complete regardless of where i wrote.
+- **a quiet tiger.** Small motion-effect PNGs sit by section titles and the footer, never in the body text.
+
+## stack
+
+- [TanStack Start](https://tanstack.com/start) (SSR + file-based routing)
+- [Cloudflare Workers](https://workers.cloudflare.com/) (host; `server.ts` handles the language routing)
+- [@mdx-js/rollup](https://mdxjs.com/) + remark-gfm / rehype-shiki (MDX content with dual-theme syntax highlighting)
+- [react-tweet](https://react-tweet.vercel.app/) (lightweight SWR-based tweet embeds)
+- Plain CSS (variables + `clamp()` for dark / light)
+
+## small details
+
+- Accept-Language q-values are parsed; only the highest-priority `ja*` tag stays on `/`. Everything else (and missing headers) redirects to `/en/...`.
+- A `lang` cookie remembers the user's pick for a year and overrides the header.
+- Blog frontmatter has an `externalUrl`; the index renders those entries as `<a target="_blank">`, and the detail route 404s. So external + internal posts share one feed.
+- Code blocks are highlighted with both `github-light` and `github-dark-dimmed`; CSS variables flip them with the theme.
+- View transitions are subtle, and `prefers-reduced-motion` is respected.
+
+## links
+
+- [GitHub (current)](https://github.com/trasta298/trasta-dev-v2)
+- [GitHub (old Astro version)](https://github.com/trasta298/trasta-dev)

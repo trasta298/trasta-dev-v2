@@ -1,0 +1,113 @@
+.toc {
+  font-family: var(--font-sans);
+}
+
+.toc__toggle {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.toc__label {
+  font-weight: 700;
+}
+
+.toc__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+  font-size: 0.86rem;
+  border-left: 1px solid var(--line);
+  padding-left: 0.9rem;
+}
+
+.toc__list li[data-depth="3"] {
+  padding-left: 0.85rem;
+  font-size: 0.82rem;
+}
+
+.toc__list a {
+  background-image: none;
+  color: var(--muted);
+  display: inline-block;
+  line-height: 1.55;
+  padding: 0.1rem 0;
+  transition: color 200ms ease, transform 200ms var(--ease-out);
+}
+
+.toc__list a:hover {
+  color: var(--ink);
+}
+
+.toc__list li[data-active="true"] > a {
+  color: var(--ink);
+  font-weight: 600;
+  position: relative;
+}
+
+.toc__list li[data-active="true"] > a::before {
+  content: "";
+  position: absolute;
+  left: -0.93rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 14px;
+  background: var(--warm-orange);
+  border-radius: 2px;
+}
+
+@media (max-width: 1100px) {
+  .toc {
+    margin-bottom: 1.6rem;
+  }
+  .toc__toggle {
+    display: flex;
+  }
+  .toc__toggle[aria-expanded="true"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: var(--line-soft);
+  }
+  .toc__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    border-color: transparent;
+    transition:
+      grid-template-rows 280ms var(--ease-soft),
+      border-color 200ms ease;
+  }
+  .toc__panel[data-open="true"] {
+    grid-template-rows: 1fr;
+    border-color: var(--line);
+  }
+  .toc__panel > .toc__list {
+    overflow: hidden;
+    min-height: 0;
+    border-left: none;
+    padding: 0 0.95rem;
+    transition: padding 280ms var(--ease-soft);
+  }
+  .toc__panel[data-open="true"] > .toc__list {
+    padding: 0.7rem 0.95rem 0.85rem;
+  }
+  .toc__list li[data-active="true"] > a::before {
+    display: none;
+  }
+}

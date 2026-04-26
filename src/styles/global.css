@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap");
+@import "./tokens.css";
+@import "./animations.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "palt" 1, "kern" 1;
+  font-size: 16px;
+  line-height: 1.78;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection);
+  color: var(--ink);
+}
+
+/* tiny grid texture (--ink based, theme aware) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--ink) 5%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 18px 18px;
+  mask-image: radial-gradient(ellipse at top, black 0%, transparent 70%);
+  opacity: 0.55;
+}
+
+:root[data-theme="dark"] body::before,
+:root.dark body::before {
+  opacity: 0.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) body::before {
+    opacity: 0.4;
+  }
+}
+
+main {
+  display: block;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Use :where() to keep specificity 0 so any class on a link wins over these defaults */
+:where(a) {
+  color: var(--link);
+  text-decoration: none;
+  background-image: linear-gradient(
+    to top,
+    var(--link-underline) 0,
+    var(--link-underline) 2px,
+    transparent 2px
+  );
+  transition: color 200ms ease, background-image 200ms ease;
+}
+
+:where(a:hover) {
+  color: var(--ink);
+  background-image: linear-gradient(
+    to top,
+    var(--link-underline) 0,
+    var(--link-underline) 4px,
+    transparent 4px
+  );
+}
+
+:where(a.bare) {
+  background-image: none;
+}
+
+:where(a.bare:hover) {
+  color: var(--accent-strong);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  margin: 0 0 0.4em;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.35rem, 2.2vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+small {
+  color: var(--muted);
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 2.5rem 0;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+  font-feature-settings: normal;
+}
+
+code {
+  background: var(--kbd);
+  border: 1px solid var(--line-soft);
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-size: 0.86em;
+}
+
+pre {
+  margin: 0;
+}
+
+pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--code-fg);
+}
+
+/* layout helpers */
+.page-wrap {
+  width: min(var(--page-width), calc(100% - 2 * var(--gutter)));
+  margin-inline: auto;
+}
+
+.content-wrap {
+  width: min(var(--content-width), calc(100% - 2 * var(--gutter)));
+  margin-inline: auto;
+}
+
+.kicker {
+  font-family: var(--font-sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  color: var(--ink-soft);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.tag[data-color="yellow"] {
+  background: color-mix(in oklab, var(--tiger-yellow) 18%, transparent);
+  border-color: color-mix(in oklab, var(--tiger-yellow) 50%, transparent);
+}
+
+.tag[data-color="mint"] {
+  background: color-mix(in oklab, var(--mint) 18%, transparent);
+  border-color: color-mix(in oklab, var(--mint) 50%, transparent);
+}
+
+.tag[data-color="pink"] {
+  background: color-mix(in oklab, var(--blush-pink) 22%, transparent);
+  border-color: color-mix(in oklab, var(--blush-pink) 55%, transparent);
+}
+
+.tag[data-color="lavender"] {
+  background: color-mix(in oklab, var(--lavender) 22%, transparent);
+  border-color: color-mix(in oklab, var(--lavender) 55%, transparent);
+}
+
+
+/* stack helpers */
+.stack > * + * {
+  margin-top: var(--stack-gap, 1rem);
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-xs);
+  z-index: 200;
+  background-image: none;
+  transform: translateY(-200%);
+  transition: transform 200ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+main {
+  padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(2rem, 5vw, 4rem);
+}

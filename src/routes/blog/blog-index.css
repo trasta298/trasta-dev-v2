@@ -1,0 +1,196 @@
+.blog-index {
+  padding-top: 1.5rem;
+}
+
+.blog-index__head {
+  position: relative;
+  margin-bottom: 2.4rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.blog-index__title {
+  margin: 0.2rem 0 0.4rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.85rem;
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.blog-index__title-en {
+  font-weight: 800;
+}
+
+.blog-index__title-ja {
+  font-size: 0.92rem;
+  letter-spacing: 0.3em;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.blog-index__lead {
+  max-width: 36em;
+  margin: 1.4rem 0 1.2rem;
+  color: var(--ink-soft);
+}
+
+.blog-index__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.blog-index__tag {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  padding: 0.32rem 0.78rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+  transition: all 220ms var(--ease-out);
+}
+
+.blog-index__tag:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.blog-index__tag[data-active="true"] {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+/* list */
+.blog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-list__item {
+  border-bottom: 1px dashed var(--line-soft);
+}
+
+.blog-list__item:last-child {
+  border-bottom: 0;
+}
+
+.blog-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1rem 0.4rem 1rem 0.2rem;
+  background-image: none;
+  color: var(--ink);
+  isolation: isolate;
+}
+
+.blog-card::before {
+  --eff-rot: 90deg;
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  top: 0.85rem;
+  right: -6px;
+  background: url("/images/effect-orange-bounce.png") center/contain no-repeat;
+  opacity: 0;
+  transform: scale(0.3) rotate(var(--eff-rot));
+  pointer-events: none;
+}
+
+.blog-card::after {
+  content: "";
+  position: absolute;
+  inset: 0.4rem -0.3rem;
+  background: var(--card-hover);
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 220ms ease;
+}
+
+.blog-card:hover::after {
+  opacity: 1;
+}
+
+.blog-card:hover::before {
+  animation: hero-pop 720ms var(--ease-soft) both;
+}
+
+.blog-list__item:nth-child(2n) .blog-card::before {
+  --eff-rot: -45deg;
+  background-image: url("/images/effect-pink-wiggle.png");
+}
+
+.blog-list__item:nth-child(3n) .blog-card::before {
+  --eff-rot: 0deg;
+  background-image: url("/images/effect-mint-sparkle.png");
+}
+
+.blog-card__date {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.blog-card__external {
+  color: var(--accent-strong);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.blog-card--external .blog-card__title {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 220ms ease;
+}
+
+.blog-card--external:hover .blog-card__title {
+  text-decoration-color: currentColor;
+}
+
+.blog-card__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.blog-card__desc {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: none;
+  font-weight: 400;
+}
+
+.blog-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.blog-list__empty {
+  padding: 2rem 0;
+  text-align: center;
+}

@@ -1,0 +1,24 @@
+.tiger-peek {
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.tiger-peek img {
+  width: min(420px, 90%);
+  height: auto;
+}
+
+:root[data-theme="dark"] .tiger-peek img,
+:root.dark .tiger-peek img {
+  filter: invert(0.94) hue-rotate(-3deg);
+  opacity: 0.92;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) .tiger-peek img {
+    filter: invert(0.94) hue-rotate(-3deg);
+    opacity: 0.92;
+  }
+}

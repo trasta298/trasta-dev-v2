@@ -1,0 +1,185 @@
+.article-prose {
+  max-width: var(--content-width);
+  margin-inline: auto;
+  font-size: 1.02rem;
+  line-height: 1.86;
+  color: var(--ink);
+}
+
+.article-prose > * + * {
+  margin-top: 1.1em;
+}
+
+.article-prose h2,
+.article-prose h3,
+.article-prose h4 {
+  font-family: var(--font-sans);
+  position: relative;
+  scroll-margin-top: 6rem;
+  letter-spacing: -0.025em;
+}
+
+.article-prose h2 {
+  margin-top: 3em;
+  margin-bottom: 0.75em;
+  font-size: clamp(1.6rem, 3vw, 1.95rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.article-prose h2::before {
+  content: "";
+  width: 0.95em;
+  height: 0.95em;
+  background-color: var(--warm-orange);
+  -webkit-mask: url("/images/hashtag.svg") center/contain no-repeat;
+  mask: url("/images/hashtag.svg") center/contain no-repeat;
+  flex-shrink: 0;
+}
+
+.article-prose h3 {
+  margin-top: 2.2em;
+  margin-bottom: 0.55em;
+  font-size: clamp(1.18rem, 1.8vw, 1.3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.article-prose h4 {
+  margin-top: 1.8em;
+  margin-bottom: 0.45em;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+
+.article-prose p {
+  margin-block: 0;
+}
+
+.article-prose strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.article-prose em {
+  color: var(--ink-soft);
+}
+
+.article-prose blockquote {
+  margin: 1.6rem 0;
+  padding: 0.4rem 0 0.4rem 1.1rem;
+  border-left: 3px solid var(--tiger-yellow);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.article-prose ul,
+.article-prose ol {
+  margin: 0 0 1em;
+  padding-left: 1.6em;
+}
+
+.article-prose li {
+  margin: 0.3em 0;
+}
+
+.article-prose li::marker {
+  color: var(--accent-strong);
+}
+
+.article-prose a:not(.bare):not(.link-card):not(.x-post) {
+  background-image: linear-gradient(
+    to top,
+    var(--link-underline) 0,
+    var(--link-underline) 1px,
+    transparent 1px
+  );
+  text-underline-offset: 4px;
+}
+
+.article-prose .x-post-embed a,
+.article-prose .link-card a {
+  background-image: none !important;
+  text-decoration: none;
+}
+
+.article-prose img {
+  margin: 1.4rem auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-soft);
+}
+
+.article-prose .link-card img,
+.article-prose .x-post-embed img {
+  margin: 0;
+  border: 0;
+  border-radius: inherit;
+}
+
+.article-prose figure {
+  margin: 1.6rem 0;
+  text-align: center;
+}
+
+.article-prose figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.article-prose hr {
+  position: relative;
+  border: 0;
+  margin: 3rem 0;
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    color-mix(in oklab, var(--line) 70%, transparent) 0 6px,
+    transparent 6px 12px
+  );
+}
+
+.article-prose hr::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: var(--bg) url("/images/effect-yellow-sparkle.png") center / 18px
+    18px no-repeat;
+}
+
+.article-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin: 1.4rem 0;
+}
+
+.article-prose th,
+.article-prose td {
+  text-align: left;
+  padding: 0.55rem 0.8rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.article-prose th {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--bg-soft);
+}

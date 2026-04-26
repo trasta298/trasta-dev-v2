@@ -1,0 +1,64 @@
+{
+	"name": "trasta-dev",
+	"private": true,
+	"type": "module",
+	"imports": {
+		"#/*": "./src/*"
+	},
+	"scripts": {
+		"dev": "vite dev --port 3000",
+		"build": "vite build",
+		"preview": "pnpm run build && vite preview",
+		"test": "vitest run",
+		"deploy": "pnpm run build && wrangler deploy",
+		"cf-typegen": "wrangler types"
+	},
+	"dependencies": {
+		"@cloudflare/vite-plugin": "^1.26.0",
+		"@mdx-js/react": "^3.1.1",
+		"@mdx-js/rollup": "^3.1.1",
+		"@shikijs/rehype": "^4.0.2",
+		"@tanstack/react-devtools": "latest",
+		"@tanstack/react-router": "latest",
+		"@tanstack/react-router-devtools": "latest",
+		"@tanstack/react-start": "latest",
+		"@tanstack/router-plugin": "^1.132.0",
+		"estree-util-value-to-estree": "^3.5.0",
+		"github-slugger": "^2.0.0",
+		"mdast-util-to-string": "^4.0.0",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
+		"react-tweet": "^3.3.0",
+		"rehype-slug": "^6.0.0",
+		"remark-breaks": "^4.0.0",
+		"remark-frontmatter": "^5.0.0",
+		"remark-gfm": "^4.0.1",
+		"remark-mdx-frontmatter": "^5.2.0",
+		"shiki": "^4.0.2",
+		"unified": "^11.0.5",
+		"unist-util-visit": "^5.1.0",
+		"workers-og": "^0.0.27"
+	},
+	"devDependencies": {
+		"@tanstack/devtools-vite": "latest",
+		"@testing-library/dom": "^10.4.1",
+		"@testing-library/react": "^16.3.0",
+		"@types/mdast": "^4.0.4",
+		"@types/mdx": "^2.0.13",
+		"@types/node": "^22.10.2",
+		"@types/react": "^19.2.0",
+		"@types/react-dom": "^19.2.0",
+		"@vitejs/plugin-react": "^6.0.1",
+		"jsdom": "^28.1.0",
+		"typescript": "^5.7.2",
+		"vite": "^8.0.0",
+		"vitest": "^3.0.5",
+		"wrangler": "^4.85.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild",
+			"lightningcss"
+		]
+	}
+}

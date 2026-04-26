@@ -1,0 +1,525 @@
+/* Motion language — small, soft, reduced-motion aware */
+
+/* 効果素材の "外向き" 回転を keyframe で確実に維持するため angle として登録 */
+@property --eff-rot {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+/* ===== keyframes ===== */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sparkle-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-6px) rotate(8deg);
+    opacity: 1;
+  }
+}
+
+@keyframes sparkle-bob-soft {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-3px) scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes tail-wag {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+
+/* hover effects */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-12deg);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.18) rotate(8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes pop-in-tilt {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(20deg) translateY(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2) rotate(-12deg) translateY(-3px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-6deg) translateY(0);
+  }
+}
+
+@keyframes bounce-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes squash {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.08, 0.92);
+  }
+  60% {
+    transform: scale(0.96, 1.04);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes underline-slide {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes shake-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px);
+  }
+  75% {
+    transform: translateX(2px);
+  }
+}
+
+/* virtual cat animations */
+@keyframes cat-idle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1.2deg);
+  }
+  25% {
+    transform: translateY(-3px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(1.2deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(0deg);
+  }
+}
+
+@keyframes cat-sway {
+  0%   { transform: translateX(0)     rotate(0deg); }
+  12%  { transform: translateX(2.5px) rotate(0.55deg); }
+  25%  { transform: translateX(4px)   rotate(1deg); }
+  37%  { transform: translateX(2.5px) rotate(0.55deg); }
+  50%  { transform: translateX(0)     rotate(0deg); }
+  62%  { transform: translateX(-2.5px) rotate(-0.55deg); }
+  75%  { transform: translateX(-4px)  rotate(-1deg); }
+  87%  { transform: translateX(-2.5px) rotate(-0.55deg); }
+  100% { transform: translateX(0)     rotate(0deg); }
+}
+
+@keyframes eff-drift {
+  0%,
+  100% {
+    transform: scale(1) rotate(var(--eff-rot, 0deg)) translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.04) rotate(calc(var(--eff-rot, 0deg) + 4deg)) translateY(-3px);
+    opacity: 0.94;
+  }
+}
+
+@keyframes eff-pop-slow {
+  0% {
+    opacity: 0;
+    transform: scale(0.35) rotate(var(--eff-rot, 0deg));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.15) rotate(var(--eff-rot, 0deg));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(var(--eff-rot, 0deg));
+  }
+}
+
+@keyframes cat-jump {
+  0% {
+    transform: translateY(0) scale(1, 1) rotate(0deg);
+  }
+  10% {
+    transform: translateY(0) scale(1.08, 0.9) rotate(0deg);
+  }
+  28% {
+    transform: translateY(-22px) scale(0.92, 1.08) rotate(-4deg);
+  }
+  42% {
+    transform: translateY(-6px) scale(1.06, 0.94) rotate(2deg);
+  }
+  56% {
+    transform: translateY(-16px) scale(0.96, 1.04) rotate(-2deg);
+  }
+  72% {
+    transform: translateY(-3px) scale(1.04, 0.96) rotate(1deg);
+  }
+  86% {
+    transform: translateY(-6px) scale(0.99, 1.01) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) scale(1, 1) rotate(0deg);
+  }
+}
+
+@keyframes cat-wiggle {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2px) rotate(-2.5deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-2px) rotate(2.5deg);
+  }
+}
+
+@keyframes cat-peek {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-7px) rotate(-2.5deg);
+  }
+  45% {
+    transform: translateY(-11px) rotate(0deg);
+  }
+  62% {
+    transform: translateY(-9px) rotate(2.5deg);
+  }
+  82% {
+    transform: translateY(-3px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes tail-wag-fast {
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+@keyframes tail-wag-wild {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  12% {
+    transform: rotate(-22deg) translateY(-2px);
+  }
+  26% {
+    transform: rotate(28deg) translateY(0);
+  }
+  40% {
+    transform: rotate(-18deg) translateY(-1px);
+  }
+  55% {
+    transform: rotate(24deg) translateY(0);
+  }
+  70% {
+    transform: rotate(-12deg) translateY(0);
+  }
+  85% {
+    transform: rotate(8deg) translateY(0);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+
+@keyframes tail-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  15% {
+    transform: rotate(-30deg) scale(1.05);
+  }
+  60% {
+    transform: rotate(390deg) scale(1);
+  }
+  80% {
+    transform: rotate(355deg) scale(0.97);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* CTA effect choreographies */
+@keyframes cta-eff-orange {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-40deg) translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.2) rotate(-12deg) translateY(-4px);
+  }
+  55% {
+    transform: scale(0.96) rotate(-22deg) translateY(2px);
+  }
+  78% {
+    transform: scale(1.04) rotate(-18deg) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-22deg) translateY(0);
+  }
+}
+
+@keyframes cta-eff-pink {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(48deg);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.18) rotate(8deg);
+  }
+  50% {
+    transform: scale(0.96) rotate(34deg);
+  }
+  72% {
+    transform: scale(1.05) rotate(20deg);
+  }
+  88% {
+    transform: scale(0.99) rotate(30deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(28deg);
+  }
+}
+
+/* hero spawning effects */
+@keyframes hero-eff-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(-15deg) translateY(0);
+  }
+  35% {
+    opacity: 1;
+    transform: scale(1.22) rotate(8deg) translateY(-6px);
+  }
+  55% {
+    transform: scale(0.94) rotate(-4deg) translateY(0);
+  }
+  75% {
+    transform: scale(1.06) rotate(2deg) translateY(-3px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg) translateY(0);
+  }
+}
+
+/* radial pop: --eff-rot に従って外を向いた状態に着地 */
+@keyframes hero-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(var(--eff-rot, 0deg));
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.2) rotate(var(--eff-rot, 0deg));
+  }
+  60% {
+    transform: scale(0.94) rotate(var(--eff-rot, 0deg));
+  }
+  82% {
+    transform: scale(1.04) rotate(var(--eff-rot, 0deg));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(var(--eff-rot, 0deg));
+  }
+}
+
+/* ===== utility classes ===== */
+.rise-in {
+  animation: rise-in 600ms var(--ease-out) both;
+}
+
+.fade-in {
+  animation: fade-in 480ms ease both;
+}
+
+.bob {
+  animation: sparkle-bob 4.2s var(--ease-soft) infinite;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.bob-soft {
+  animation: sparkle-bob-soft 5.6s var(--ease-soft) infinite;
+}
+
+.tail-wag {
+  transform-origin: bottom left;
+  animation: tail-wag 3.8s var(--ease-soft) infinite;
+}
+
+/* page transition (View Transitions API) — soft cross-fade with subtle drift */
+@keyframes vt-fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.992);
+    filter: blur(2px);
+  }
+}
+
+@keyframes vt-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.992);
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+::view-transition-group(root) {
+  animation-duration: 520ms;
+  animation-timing-function: var(--ease-soft);
+}
+
+::view-transition-old(root) {
+  animation: vt-fade-out 380ms var(--ease-soft) both;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: vt-fade-in 520ms 80ms var(--ease-soft) both;
+  mix-blend-mode: normal;
+}
+
+/*
+ * reduced-motion 配下では:
+ * - infinite ループ系(cat-idle / sparkle-bob / tail-wag 等)は 1回で停止
+ * - View Transitions は無効化
+ * - hover で 1 回再生される finite アニメと色/背景の transition はそのまま許容
+ *   (vestibular 影響は小さく、accessibility feedback として有用なため)
+ */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+  /* exception: subtle hero sway stays looping (translateX 4px / 1deg is well below
+     the threshold that triggers vestibular discomfort). */
+  .home-hero__tiger {
+    animation-iteration-count: infinite !important;
+  }
+}
+
+/* staggered enter helper — apply with `data-enter`, child indexes via --i */
+[data-enter="true"] > * {
+  animation: rise-in 700ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 80ms);
+}
