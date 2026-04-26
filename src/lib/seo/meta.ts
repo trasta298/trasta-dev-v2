@@ -1,5 +1,6 @@
 import type { Locale } from '../i18n/locale'
 import { localizePath } from '../i18n/locale'
+import { homeOgImage } from '../og/url'
 import { SITE, siteCopy } from './site'
 
 type MetaArgs = {
@@ -39,7 +40,7 @@ export function buildHead({
   const desc = description ?? copy.description
   const canonicalPath = url ?? localizePath('/', locale)
   const canonical = new URL(canonicalPath, SITE.url).toString()
-  const ogImage = image ?? SITE.defaultOgImage
+  const ogImage = image ?? homeOgImage(locale)
 
   const altLocale: Locale = locale === 'ja' ? 'en' : 'ja'
   const altCopy = siteCopy(altLocale)

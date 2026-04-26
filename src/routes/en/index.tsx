@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { HomePage } from '../../components/pages/HomePage'
 import { getAllPosts } from '../../lib/content/blog'
 import { getAllWorks } from '../../lib/content/works'
-import { homeOgImage } from '../../lib/og/url'
 import { buildHead } from '../../lib/seo/meta'
 import '../index.css'
 
@@ -10,11 +9,7 @@ const LOCALE = 'en' as const
 
 export const Route = createFileRoute('/en/')({
   head: () => {
-    const { meta, links } = buildHead({
-      url: '/en',
-      locale: LOCALE,
-      image: homeOgImage(LOCALE),
-    })
+    const { meta, links } = buildHead({ url: '/en', locale: LOCALE })
     return { meta, links }
   },
   component: HomeEnRoute,

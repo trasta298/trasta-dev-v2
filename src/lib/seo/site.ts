@@ -13,7 +13,6 @@ const COMMON = {
   url: 'https://trasta.dev',
   author: 'trasta',
   twitter: '@trasta_dev',
-  defaultOgImage: '/images/concept-light.png',
 } as const
 
 export const SITE = {

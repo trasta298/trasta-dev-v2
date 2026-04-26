@@ -18,7 +18,7 @@ export const Route = createRootRoute({
       { property: 'og:site_name', content: SITE.name },
       {
         property: 'og:image',
-        content: new URL(SITE.defaultOgImage, SITE.url).toString(),
+        content: new URL('/og/home.png', SITE.url).toString(),
       },
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
