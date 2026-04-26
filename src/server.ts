@@ -18,9 +18,11 @@ function readLangCookie(cookieHeader: string | null): Locale | null {
  * Browser-language policy: japanese readers stay on `/`, everyone else gets `/en`.
  * The most-preferred (highest-q) language tag decides — if it isn't japanese,
  * we fall back to english regardless of which non-ja language it is.
+ * Returns null when no signal is available (e.g. social-media crawlers); callers
+ * skip redirection so the canonical JA URL is served to bots.
  */
-function preferredFromAcceptLanguage(header: string | null): Locale {
-  if (!header) return 'en'
+function preferredFromAcceptLanguage(header: string | null): Locale | null {
+  if (!header) return null
   const parts = header
     .split(',')
     .map((entry) => {
@@ -31,7 +33,7 @@ function preferredFromAcceptLanguage(header: string | null): Locale {
     })
     .filter((p) => p.tag && p.tag !== '*')
     .sort((a, b) => b.q - a.q)
-  if (parts.length === 0) return 'en'
+  if (parts.length === 0) return null
   return parts[0].tag.startsWith('ja') ? 'ja' : 'en'
 }
 
