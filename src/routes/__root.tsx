@@ -9,6 +9,9 @@ import globalCss from '../styles/global.css?url'
 
 const THEME_INIT_SCRIPT = `(function(){try{var s=window.localStorage.getItem('theme');var explicit=(s==='light'||s==='dark');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=explicit?s:(p?'dark':'light');var e=document.documentElement;e.classList.remove('light','dark');e.classList.add(r);if(explicit){e.setAttribute('data-theme',r)}else{e.removeAttribute('data-theme')}e.style.colorScheme=r;var p2=location.pathname;e.lang=(p2==='/en'||p2.indexOf('/en/')===0)?'en':'ja';}catch(e){}})();`
 
+const GA_MEASUREMENT_ID = 'G-60PX17XX9G'
+const GA_INIT_SCRIPT = `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`
+
 export const Route = createRootRoute({
   head: () => ({
     meta: [
@@ -37,6 +40,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="ja" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        {import.meta.env.PROD ? (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <script dangerouslySetInnerHTML={{ __html: GA_INIT_SCRIPT }} />
+          </>
+        ) : null}
         <HeadContent />
       </head>
       <body>
