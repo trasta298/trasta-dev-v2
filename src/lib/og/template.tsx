@@ -234,7 +234,7 @@ export function homeOgTemplate({
         <div
           style={{
             display: 'flex',
-            fontSize: '188px',
+            fontSize: '100px',
             fontWeight: 800,
             letterSpacing: '-0.045em',
             lineHeight: 1,
@@ -246,8 +246,8 @@ export function homeOgTemplate({
         <div
           style={{
             display: 'flex',
-            marginTop: '28px',
-            fontSize: '30px',
+            marginTop: '20px',
+            fontSize: '22px',
             fontWeight: 500,
             color: COLORS.muted,
             textAlign: 'center',
