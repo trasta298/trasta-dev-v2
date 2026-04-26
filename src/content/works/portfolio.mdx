@@ -15,8 +15,6 @@ featured: true
 
 - **本文を邪魔しない**: 余白とタイポグラフィを優先。装飾は要所だけ。
 - **ja / en の二言語**: ブラウザ言語で振り分け、Cookie に保持。記事ごとに ja/en MDX を別管理。
-- **外部ブログも一覧に並べる**: trap.jp や Zenn の記事もブログ index に混ぜて、書いた場所がどこでも一覧でたどれるように。
-- **ちょっとだけ"虎"を出す**: フッターやタイトル横に控えめなモーション素材を散らしています。
 
 ## 使った技術
 
@@ -32,7 +30,6 @@ featured: true
 - `lang` Cookie で切り替えを記憶 (一年)
 - ブログ frontmatter に `externalUrl` を足し、index は `<a target="_blank">`、詳細は 404 にして外部リンクと内部記事を同じ列で扱えるように
 - コードブロックは GitHub の light / dark を両方埋め込み、テーマ切り替え時に CSS 変数で出し分け
-- View Transitions まわりは控えめに、reduced-motion を厳守
 
 ## 関連リンク
 
