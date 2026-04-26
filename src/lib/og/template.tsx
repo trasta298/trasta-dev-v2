@@ -198,3 +198,74 @@ export function collectGlyphText(input: Omit<OgTemplateInput, 'logoDataUrl'>): s
   ]
   return Array.from(new Set(parts.join(''))).join('')
 }
+
+export type HomeOgTemplateInput = {
+  locale: 'ja' | 'en'
+  tagline: string
+  tigerDataUrl: string
+}
+
+export function homeOgTemplate({
+  tagline,
+  tigerDataUrl,
+}: HomeOgTemplateInput): ReactElement {
+  return (
+    <div
+      style={{
+        width: '1200px',
+        height: '630px',
+        background: COLORS.bg,
+        color: COLORS.ink,
+        fontFamily: `${FONT_LATIN}, ${FONT_JP}`,
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 80px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            fontSize: '188px',
+            fontWeight: 800,
+            letterSpacing: '-0.045em',
+            lineHeight: 1,
+            color: COLORS.ink,
+          }}
+        >
+          trasta.dev
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            marginTop: '28px',
+            fontSize: '30px',
+            fontWeight: 500,
+            color: COLORS.muted,
+            textAlign: 'center',
+          }}
+        >
+          {tagline}
+        </div>
+      </div>
+      <img
+        src={tigerDataUrl}
+        width={1200}
+        style={{ width: '100%', display: 'block' }}
+        alt=""
+      />
+    </div>
+  )
+}
+
+export function homeGlyphText(tagline: string): string {
+  return Array.from(new Set(`trasta.dev${tagline}`)).join('')
+}

@@ -8,3 +8,7 @@ export function dynamicOgImage(
   const localeSegment = locale === 'en' ? '/en' : ''
   return `/og${localeSegment}/${kind}/${encodeURIComponent(slug)}.png`
 }
+
+export function homeOgImage(locale: Locale): string {
+  return locale === 'en' ? '/og/en/home.png' : '/og/home.png'
+}
