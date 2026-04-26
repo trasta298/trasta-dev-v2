@@ -118,7 +118,7 @@ export const DICT: Record<Locale, Dict> = {
         bio: [
           '2000 年生まれ・兵庫出身。灘中高 → 東京科学大学を経て、いまは [CoeFont Co. Ltd.](https://coefont.com) で Software Engineer をしています (2020〜)。',
           '在学中は [東京科学大学デジタル創作同好会 traP](https://trap.jp) に所属し、元代表でした。',
-          'プログラミングのきっかけは中学生の頃に Minecraft PE にハマったこと。mod 作りやサーバープラグインを書いているうちに、何か新しいもの・面白いものを作るのがすきです。',
+          'プログラミングのきっかけは中学生の頃に Minecraft PE にハマったこと。mod 作りやサーバープラグインを書いているうちに、色々作るようになりました。何か新しいもの・面白いものを作るのがすきです。',
           '普段は Python / Golang / TypeScript / AWS あたりを触っています。',
         ],
       },
