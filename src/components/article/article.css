@@ -107,7 +107,6 @@
 }
 
 .article-prose a:not(.bare):not(.link-card):not(.x-post):hover {
-  color: var(--ink);
   background-image: linear-gradient(
     to top,
     var(--link-underline) 0,
