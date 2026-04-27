@@ -40,27 +40,3 @@
   justify-content: center;
   margin-bottom: 3rem;
 }
-
-.not-found__tiger {
-  display: flex;
-  justify-content: center;
-  opacity: 0.85;
-}
-
-.not-found__tiger img {
-  width: min(360px, 80%);
-  height: auto;
-}
-
-:root[data-theme="dark"] .not-found__tiger img,
-:root.dark .not-found__tiger img {
-  filter: invert(0.94) hue-rotate(-2deg);
-  opacity: 0.9;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]):not(.light) .not-found__tiger img {
-    filter: invert(0.94) hue-rotate(-2deg);
-    opacity: 0.9;
-  }
-}

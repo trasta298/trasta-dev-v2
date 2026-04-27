@@ -33,10 +33,6 @@ export function NotFound() {
           {dict.notFound.blog}
         </Link>
       </div>
-
-      <div className="not-found__tiger" aria-hidden>
-        <img src="/images/tiger-peeking-wall.png" alt="" loading="lazy" />
-      </div>
     </div>
   )
 }
