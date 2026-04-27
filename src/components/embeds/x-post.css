@@ -8,15 +8,14 @@
   --tweet-container-margin: 0;
   --tweet-font-family: var(--font-sans);
 
-  /* mentions, hashtags, follow link などはサイト本文と同じ ink で揃える。
-     アクセントとして残したい時は accent-strong に切替可。 */
-  --tweet-color-blue-primary: var(--ink);
-  --tweet-color-blue-primary-hover: var(--ink);
-  --tweet-color-blue-secondary: var(--ink);
-  --tweet-color-blue-secondary-hover: rgba(0, 0, 0, 0.04);
+  /* mention/hashtag/follow link などは X 純正の twitter blue */
+  --tweet-color-blue-primary: rgb(29, 155, 240);
+  --tweet-color-blue-primary-hover: rgb(26, 140, 216);
+  --tweet-color-blue-secondary: rgb(0, 111, 214);
+  --tweet-color-blue-secondary-hover: rgba(0, 111, 214, 0.1);
 
-  --tweet-color-red-primary: #f43f5e;
-  --tweet-color-red-primary-hover: rgba(244, 63, 94, 0.1);
+  --tweet-color-red-primary: rgb(249, 24, 128);
+  --tweet-color-red-primary-hover: rgba(249, 24, 128, 0.1);
 
   /* カード塗り・枠・skeleton は X 実物の light を踏襲。dark は下で上書き */
   --tweet-bg-color: #ffffff;
@@ -43,7 +42,8 @@
 /* X 実物の dark (twitter dim) に合わせる */
 :root[data-theme="dark"] .x-post-embed .react-tweet-theme,
 :root.dark .x-post-embed .react-tweet-theme {
-  --tweet-color-blue-secondary-hover: rgba(255, 255, 255, 0.04);
+  --tweet-color-blue-secondary: rgb(107, 201, 251);
+  --tweet-color-blue-secondary-hover: rgba(107, 201, 251, 0.1);
   --tweet-bg-color: rgb(21, 32, 43);
   --tweet-bg-color-hover: rgb(30, 39, 50);
   --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
@@ -61,7 +61,8 @@
   :root:not([data-theme="light"]):not(.light)
     .x-post-embed
     .react-tweet-theme {
-    --tweet-color-blue-secondary-hover: rgba(255, 255, 255, 0.04);
+    --tweet-color-blue-secondary: rgb(107, 201, 251);
+    --tweet-color-blue-secondary-hover: rgba(107, 201, 251, 0.1);
     --tweet-bg-color: rgb(21, 32, 43);
     --tweet-bg-color-hover: rgb(30, 39, 50);
     --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
