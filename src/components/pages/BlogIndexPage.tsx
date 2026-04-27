@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import type { CSSProperties } from 'react'
 import { useMemo, useState } from 'react'
 import { Sparkle } from '../motion/Sparkle'
 import type { Locale } from '../../lib/i18n/locale'
@@ -16,14 +17,21 @@ export type BlogIndexPageProps = {
   tags: ReadonlyArray<string>
 }
 
+const PREVIEW_TAG_COUNT = 4
+
 export function BlogIndexPage({ locale, posts, tags }: BlogIndexPageProps) {
   const dict = getDict(locale)
   const [activeTag, setActiveTag] = useState<string | null>(null)
+  const [expanded, setExpanded] = useState(false)
 
   const filtered = useMemo(() => {
     if (!activeTag) return posts
     return posts.filter((p) => p.frontmatter.tags.includes(activeTag))
   }, [posts, activeTag])
+
+  const hasMore = tags.length > PREVIEW_TAG_COUNT
+  const activeIndex = activeTag ? tags.indexOf(activeTag) : -1
+  const activeIsExtra = activeIndex >= PREVIEW_TAG_COUNT
 
   return (
     <div className="page-wrap blog-index">
@@ -38,26 +46,54 @@ export function BlogIndexPage({ locale, posts, tags }: BlogIndexPageProps) {
         </h1>
         <p className="blog-index__lead">{dict.blog.lead}</p>
 
-        <div className="blog-index__tags" role="group" aria-label="filter by tag">
+        <div
+          className="blog-index__tags"
+          data-expanded={expanded ? 'true' : 'false'}
+          role="group"
+          aria-label="filter by tag"
+        >
           <button
             type="button"
-            className="blog-index__tag"
+            className="blog-index__tag blog-index__tag--all"
             data-active={activeTag === null ? 'true' : 'false'}
             onClick={() => setActiveTag(null)}
           >
             {dict.blog.filterAll}
           </button>
-          {tags.map((tag) => (
+          {tags.map((tag, i) => {
+            const isExtra = i >= PREVIEW_TAG_COUNT
+            const pinActive = isExtra && tag === activeTag && !expanded
+            return (
+              <button
+                key={tag}
+                type="button"
+                className="blog-index__tag"
+                data-active={activeTag === tag ? 'true' : 'false'}
+                data-extra={isExtra ? 'true' : 'false'}
+                data-pinned={pinActive ? 'true' : 'false'}
+                style={
+                  isExtra
+                    ? ({ '--reveal-i': i - PREVIEW_TAG_COUNT } as CSSProperties)
+                    : undefined
+                }
+                onClick={() => setActiveTag(tag)}
+              >
+                {tag}
+              </button>
+            )
+          })}
+          {hasMore ? (
             <button
-              key={tag}
               type="button"
-              className="blog-index__tag"
-              data-active={activeTag === tag ? 'true' : 'false'}
-              onClick={() => setActiveTag(tag)}
+              className="blog-index__tag blog-index__tag--toggle"
+              aria-expanded={expanded}
+              onClick={() => setExpanded((v) => !v)}
             >
-              {tag}
+              {expanded
+                ? '− less'
+                : `+ ${tags.length - PREVIEW_TAG_COUNT}${activeIsExtra ? ' · 1 active' : ''}`}
             </button>
-          ))}
+          ) : null}
         </div>
       </header>
 
