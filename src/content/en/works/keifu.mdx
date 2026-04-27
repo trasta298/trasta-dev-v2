@@ -1,0 +1,27 @@
+---
+title: "keifu"
+description: "A TUI for viewing Git commit graphs in the terminal."
+publishedAt: "2025-12-21"
+tags: ["Rust", "ratatui", "Git", "CLI"]
+image: "/images/works/_keifu.png"
+repositoryUrl: "https://github.com/trasta298/keifu"
+---
+
+keifu (系譜) is a TUI tool for viewing Git commit graphs in the terminal, built with Rust + [ratatui](https://ratatui.rs/).
+
+I had been happily using the VS Code Git Graph extension, but as i moved more of my workflow to the CLI for Claude Code, i wanted something with the same feel. Install via `cargo install keifu` or `brew install trasta298/tap/keifu`.
+
+![keifu screenshot](/images/works/_keifu.png)
+
+## design notes
+
+- **readable graph.** Instead of `git log --graph`, branches are color-coded and drawn with a clean Unicode graph so the structure pops at a glance.
+- **keep it small.** Only checkout, branch create/delete, and fetch. It is not a full Git client — fine-grained operations are left to Claude Code.
+- **narrow-terminal friendly.** Layout stays usable in split panes and small windows.
+- **no image protocol.** Pure Unicode line drawing, so it works on Windows Terminal too.
+
+## links
+
+- [GitHub Repository](https://github.com/trasta298/keifu)
+- [crates.io](https://crates.io/crates/keifu)
+- [Blog post about why i built it](/en/blog/20251221/)

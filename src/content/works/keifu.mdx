@@ -1,0 +1,27 @@
+---
+title: "keifu"
+description: "Git のコミットグラフをターミナル上で見るための TUI ツール"
+publishedAt: "2025-12-21"
+tags: ["Rust", "ratatui", "Git", "CLI"]
+image: "/images/works/_keifu.png"
+repositoryUrl: "https://github.com/trasta298/keifu"
+---
+
+keifu (系譜) は、Git のコミットグラフをターミナル上で見るための TUI ツールです。Rust + [ratatui](https://ratatui.rs/) で書きました。
+
+普段 VS Code の Git Graph 拡張を愛用していたのですが、Claude Code を使うようになって CLI 中心の作業に寄せたくなり、同じ感覚で使えるものが欲しくて作りました。`cargo install keifu` か `brew install trasta298/tap/keifu` でインストールできます。
+
+![keifu のスクリーンショット](/images/works/_keifu.png)
+
+## 設計の方針
+
+- **読みやすいグラフ**: `git log --graph` よりも、ブランチごとに色分けされた Unicode グラフで一目で構造が分かるように
+- **シンプルに保つ**: checkout / ブランチ作成・削除 / fetch だけ。リッチな Git クライアントにはしない (細かい操作は Claude Code に任せる前提)
+- **狭い画面でも快適**: ターミナル分割や小さいウィンドウでも崩れないレイアウト
+- **画像プロトコル不要**: Windows Terminal でも動くように、Unicode の罫線だけで描画
+
+## 関連リンク
+
+- [GitHub Repository](https://github.com/trasta298/keifu)
+- [crates.io](https://crates.io/crates/keifu)
+- [作った経緯のブログ記事](/blog/20251221/)
