@@ -99,14 +99,23 @@
   color: var(--accent-strong);
 }
 
-.article-prose a:not(.bare):not(.link-card):not(.x-post) {
+/* embed (XPost / LinkCard) の中の <a> はラッパーを子孫に持つだけで anchor 自身に
+   除外クラスが付いていないため、:not(.link-card):not(.x-post) では拾えない。
+   :where() で specificity を増やさず descendant 除外を入れる。 */
+.article-prose
+  a:not(.bare):not(.link-card):not(.x-post):not(
+    :where(.x-post-embed *, .link-card *)
+  ) {
   color: var(--accent-strong);
   background-image: none;
   text-underline-offset: 4px;
   transition: color 200ms ease, background-image 200ms ease;
 }
 
-.article-prose a:not(.bare):not(.link-card):not(.x-post):hover {
+.article-prose
+  a:not(.bare):not(.link-card):not(.x-post):not(
+    :where(.x-post-embed *, .link-card *)
+  ):hover {
   background-image: linear-gradient(
     to top,
     var(--link-underline) 0,

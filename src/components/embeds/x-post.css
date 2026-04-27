@@ -4,35 +4,39 @@
   justify-content: center;
 }
 
-.x-post-embed [data-theme] {
+.x-post-embed .react-tweet-theme {
   --tweet-container-margin: 0;
   --tweet-font-family: var(--font-sans);
-  --tweet-color-blue-primary: var(--accent-strong);
-  --tweet-color-blue-primary-hover: var(--accent-strong);
+
+  /* mentions, hashtags, follow link などはサイト本文と同じ ink で揃える。
+     アクセントとして残したい時は accent-strong に切替可。 */
+  --tweet-color-blue-primary: var(--ink);
+  --tweet-color-blue-primary-hover: var(--ink);
+  --tweet-color-blue-secondary: var(--ink);
+  --tweet-color-blue-secondary-hover: var(--bg-soft);
+
   --tweet-color-red-primary: #f43f5e;
-  --tweet-color-red-primary-hover: #f43f5e;
-  --tweet-bg-color: var(--card);
-  --tweet-bg-color-hover: var(--card-hover);
+  --tweet-color-red-primary-hover: rgba(244, 63, 94, 0.1);
+
+  /* カード塗りはサイトの --card と被らないよう一段ニュートラルな bg-soft を使う */
+  --tweet-bg-color: var(--bg-soft);
+  --tweet-bg-color-hover: var(--bg-soft);
   --tweet-quoted-bg-color-hover: var(--card-hover);
-  --tweet-color-blue-secondary: var(--accent-strong);
-  --tweet-color-blue-secondary-hover: var(--card-hover);
+
   --tweet-font-color: var(--ink);
   --tweet-font-color-secondary: var(--muted);
   --tweet-border: 1px solid var(--line);
   --tweet-skeleton-gradient: linear-gradient(
     270deg,
-    var(--card),
+    var(--bg-soft),
     var(--line-soft),
     var(--line-soft),
-    var(--card)
+    var(--bg-soft)
   );
   --tweet-border-radius: var(--radius-md);
   --tweet-actions-font-weight: 600;
   --tweet-replies-font-weight: 500;
   width: min(100%, 560px);
-}
-
-.x-post-embed .react-tweet-theme {
   margin: 0 !important;
 }
 
