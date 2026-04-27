@@ -30,7 +30,6 @@
 
   /* text helpers */
   --link: var(--ink);
-  --link-underline: var(--tiger-yellow);
   --muted: var(--ink-mute);
 
   /* fixed-on-warm CTA text (themeに左右されず常に濃い色) */
@@ -38,6 +37,9 @@
 
   /* warm-orange と ink の混色。テキストカラーとして使うときは生のwarm-orangeより読みやすい */
   --accent-strong: color-mix(in oklab, var(--warm-orange) 65%, var(--ink) 35%);
+
+  /* ライトテーマでは生のtiger-yellowはクリーム下地で沈むので、accent-strong寄りの暖色で下線を引く */
+  --link-underline: var(--accent-strong);
 
   /* shadow */
   --shadow-card: 0 1px 0 rgba(17, 17, 17, 0.04), 0 14px 28px -22px rgba(45, 36, 18, 0.18);
