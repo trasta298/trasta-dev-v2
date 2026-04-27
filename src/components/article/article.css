@@ -100,13 +100,20 @@
 }
 
 .article-prose a:not(.bare):not(.link-card):not(.x-post) {
+  color: var(--accent-strong);
+  background-image: none;
+  text-underline-offset: 4px;
+  transition: color 200ms ease, background-image 200ms ease;
+}
+
+.article-prose a:not(.bare):not(.link-card):not(.x-post):hover {
+  color: var(--ink);
   background-image: linear-gradient(
     to top,
     var(--link-underline) 0,
-    var(--link-underline) 1px,
-    transparent 1px
+    var(--link-underline) 3px,
+    transparent 3px
   );
-  text-underline-offset: 4px;
 }
 
 .article-prose .x-post-embed a,
