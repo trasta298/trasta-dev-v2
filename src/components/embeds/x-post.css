@@ -13,31 +13,67 @@
   --tweet-color-blue-primary: var(--ink);
   --tweet-color-blue-primary-hover: var(--ink);
   --tweet-color-blue-secondary: var(--ink);
-  --tweet-color-blue-secondary-hover: var(--bg-soft);
+  --tweet-color-blue-secondary-hover: rgba(0, 0, 0, 0.04);
 
   --tweet-color-red-primary: #f43f5e;
   --tweet-color-red-primary-hover: rgba(244, 63, 94, 0.1);
 
-  /* カード塗りはサイトの --card と被らないよう一段ニュートラルな bg-soft を使う */
-  --tweet-bg-color: var(--bg-soft);
-  --tweet-bg-color-hover: var(--bg-soft);
-  --tweet-quoted-bg-color-hover: var(--card-hover);
+  /* カード塗り・枠・skeleton は X 実物の light を踏襲。dark は下で上書き */
+  --tweet-bg-color: #ffffff;
+  --tweet-bg-color-hover: rgb(247, 249, 249);
+  --tweet-quoted-bg-color-hover: rgba(0, 0, 0, 0.03);
+  --tweet-border: 1px solid rgb(207, 217, 222);
+  --tweet-skeleton-gradient: linear-gradient(
+    270deg,
+    #fafafa,
+    #eaeaea,
+    #eaeaea,
+    #fafafa
+  );
 
   --tweet-font-color: var(--ink);
   --tweet-font-color-secondary: var(--muted);
-  --tweet-border: 1px solid var(--line);
-  --tweet-skeleton-gradient: linear-gradient(
-    270deg,
-    var(--bg-soft),
-    var(--line-soft),
-    var(--line-soft),
-    var(--bg-soft)
-  );
   --tweet-border-radius: var(--radius-md);
   --tweet-actions-font-weight: 600;
   --tweet-replies-font-weight: 500;
   width: min(100%, 560px);
   margin: 0 !important;
+}
+
+/* X 実物の dark (twitter dim) に合わせる */
+:root[data-theme="dark"] .x-post-embed .react-tweet-theme,
+:root.dark .x-post-embed .react-tweet-theme {
+  --tweet-color-blue-secondary-hover: rgba(255, 255, 255, 0.04);
+  --tweet-bg-color: rgb(21, 32, 43);
+  --tweet-bg-color-hover: rgb(30, 39, 50);
+  --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
+  --tweet-border: 1px solid rgb(66, 83, 100);
+  --tweet-skeleton-gradient: linear-gradient(
+    270deg,
+    #15202b,
+    rgb(30, 39, 50),
+    rgb(30, 39, 50),
+    rgb(21, 32, 43)
+  );
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light)
+    .x-post-embed
+    .react-tweet-theme {
+    --tweet-color-blue-secondary-hover: rgba(255, 255, 255, 0.04);
+    --tweet-bg-color: rgb(21, 32, 43);
+    --tweet-bg-color-hover: rgb(30, 39, 50);
+    --tweet-quoted-bg-color-hover: rgba(255, 255, 255, 0.03);
+    --tweet-border: 1px solid rgb(66, 83, 100);
+    --tweet-skeleton-gradient: linear-gradient(
+      270deg,
+      #15202b,
+      rgb(30, 39, 50),
+      rgb(30, 39, 50),
+      rgb(21, 32, 43)
+    );
+  }
 }
 
 .x-post-embed__fallback {
