@@ -18,21 +18,22 @@ const COMMON = {
 export const SITE = {
   ...COMMON,
   description:
-    'i build small, kind web experiences. trasta / とらすた のブログとポートフォリオ。',
-  descriptionJa: 'ブログ中心の個人ポートフォリオ。小さくやさしいウェブを作っています。',
+    'i tinker on new things that look fun. trasta / とらすた のブログとポートフォリオ。',
+  descriptionJa:
+    'i tinker on new things that look fun. trasta / とらすた のブログとポートフォリオ。',
   locale: 'ja-JP',
 } as const
 
 const COPY: Record<Locale, SiteCopy> = {
   ja: {
     description:
-      'i build small, kind web experiences. trasta / とらすた のブログとポートフォリオ。',
+      'i tinker on new things that look fun. trasta / とらすた のブログとポートフォリオ。',
     ogLocale: 'ja_JP',
     htmlLang: 'ja',
   },
   en: {
     description:
-      'a blog and portfolio by trasta — small, kind web experiences.',
+      'i tinker on new things that look fun. a blog and portfolio by trasta.',
     ogLocale: 'en_US',
     htmlLang: 'en',
   },

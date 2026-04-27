@@ -39,7 +39,7 @@ function matchHomePath(pathname: string): Locale | null {
 
 const HOME_TAGLINES: Record<Locale, string> = {
   ja: '新しくて面白そうなものを、ちょこちょこ作っています。',
-  en: 'i make new and slightly weird things.',
+  en: 'i tinker on new things that look fun.',
 }
 
 type TemplateInputBase = Omit<OgTemplateInput, 'logoDataUrl'>

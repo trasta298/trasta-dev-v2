@@ -71,7 +71,7 @@ export const DICT: Record<Locale, Dict> = {
     footer: { blog: 'blog', works: 'works', about: 'about' },
     home: {
       kicker: 'trasta.dev',
-      leadEn: 'i make new and slightly weird things.',
+      leadEn: 'i tinker on new things that look fun.',
       leadJa: '新しくて面白そうなものを、ちょこちょこ作っています。',
       ctaPrimary: 'read the blog',
       ctaGhost: 'about me',
@@ -161,7 +161,7 @@ export const DICT: Record<Locale, Dict> = {
     footer: { blog: 'blog', works: 'works', about: 'about' },
     home: {
       kicker: 'trasta.dev',
-      leadEn: 'i make new and slightly weird things.',
+      leadEn: 'i tinker on new things that look fun.',
       leadJa: 'mostly small projects — tools, hackathon scraps, side experiments.',
       ctaPrimary: 'read the blog',
       ctaGhost: 'about me',
@@ -202,7 +202,7 @@ export const DICT: Record<Locale, Dict> = {
       titleHello: 'hi, i am ',
       titleName: 'trasta',
       lead:
-        'a software engineer who likes building new and slightly weird things. this is where i keep the records of what i make and think about.',
+        'a software engineer who likes tinkering on new things that look fun. this is where i keep the records of what i make and think about.',
       profile: {
         title: 'who am i?',
         bio: [
