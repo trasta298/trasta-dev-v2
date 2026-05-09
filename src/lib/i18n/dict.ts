@@ -30,6 +30,9 @@ type Dict = {
     backToAll: string
     minSuffix: (n: number) => string
     updatedPrefix: string
+    translatedNoticeLabel: string
+    translatedNoticeBody: string
+    translatedNoticeOriginal: string
   }
   works: {
     kicker: string
@@ -97,6 +100,10 @@ export const DICT: Record<Locale, Dict> = {
       backToAll: '← all posts',
       minSuffix: (n) => `${n} min`,
       updatedPrefix: 'updated',
+      translatedNoticeLabel: 'auto-translated',
+      translatedNoticeBody:
+        'この記事は日本語版を自動翻訳した英訳です。表現のずれがある場合は日本語版が正です。',
+      translatedNoticeOriginal: '日本語版を読む',
     },
     works: {
       kicker: 'works',
@@ -187,6 +194,10 @@ export const DICT: Record<Locale, Dict> = {
       backToAll: '← all posts',
       minSuffix: (n) => `${n} min read`,
       updatedPrefix: 'updated',
+      translatedNoticeLabel: 'auto-translated',
+      translatedNoticeBody:
+        'This post is a machine translation of the Japanese original. If anything reads off, the Japanese version is canonical.',
+      translatedNoticeOriginal: 'Read the Japanese version',
     },
     works: {
       kicker: 'works',

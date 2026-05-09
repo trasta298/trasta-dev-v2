@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { Article } from '../article/Article'
 import { ShareButtons } from '../article/ShareButtons'
 import { Toc } from '../article/Toc'
+import { Callout } from '../embeds/Callout'
 import { Sparkle } from '../motion/Sparkle'
 import type { Locale } from '../../lib/i18n/locale'
 import { localizePath } from '../../lib/i18n/locale'
@@ -80,6 +81,16 @@ export function BlogPostPage({
         </aside>
         <div className="post-page__content">
           <Article>
+            {locale === 'en' ? (
+              <Callout type="note" title={dict.blog.translatedNoticeLabel}>
+                <p>
+                  {dict.blog.translatedNoticeBody}{' '}
+                  <Link to="/blog/$slug" params={{ slug }}>
+                    {dict.blog.translatedNoticeOriginal}
+                  </Link>
+                </p>
+              </Callout>
+            ) : null}
             <Component />
           </Article>
           <hr />

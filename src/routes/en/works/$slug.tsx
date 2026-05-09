@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from '@tanstack/react-router'
+import { createFileRoute, notFound, redirect } from '@tanstack/react-router'
 import { WorkDetailPage } from '../../../components/pages/WorkDetailPage'
 import { getWorkBySlug } from '../../../lib/content/works'
 import { dynamicOgImage } from '../../../lib/og/url'
@@ -10,7 +10,13 @@ const LOCALE = 'en' as const
 export const Route = createFileRoute('/en/works/$slug')({
   loader: ({ params }) => {
     const work = getWorkBySlug(params.slug, LOCALE)
-    if (!work) throw notFound()
+    if (!work) {
+      const jaWork = getWorkBySlug(params.slug, 'ja')
+      if (jaWork) {
+        throw redirect({ to: '/works/$slug', params: { slug: params.slug } })
+      }
+      throw notFound()
+    }
     return { slug: work.slug, frontmatter: work.frontmatter }
   },
   head: ({ loaderData }) => {
