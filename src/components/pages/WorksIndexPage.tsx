@@ -29,7 +29,7 @@ export function WorksIndexPage({ locale, works }: WorksIndexPageProps) {
           <li
             key={work.slug}
             className="works-grid__item rise-in"
-            style={{ animationDelay: `${idx * 70}ms` }}
+            style={{ animationDelay: `${Math.min(idx, 6) * 70}ms` }}
           >
             <Link
               to={localizePath('/works/$slug', locale)}

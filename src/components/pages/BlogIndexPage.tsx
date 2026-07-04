@@ -104,7 +104,8 @@ export function BlogIndexPage({ locale, posts, tags }: BlogIndexPageProps) {
           <li
             key={post.slug}
             className="blog-list__item rise-in"
-            style={{ animationDelay: `${idx * 50}ms` }}
+            // ファーストビュー外まで stagger を引きずらない (記事数×50ms は長すぎる)
+            style={{ animationDelay: `${Math.min(idx, 8) * 50}ms` }}
           >
             <BlogCard post={post} locale={locale} dict={dict} />
           </li>

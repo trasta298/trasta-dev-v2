@@ -451,45 +451,34 @@
   animation: tail-wag 3.8s var(--ease-soft) infinite;
 }
 
-/* page transition (View Transitions API) — soft cross-fade with subtle drift */
+/* page transition (View Transitions API) — quick cross-fade with subtle drift.
+   blur は文字が滲むので使わない。read の妨げにならない 300ms 以内に収める */
 @keyframes vt-fade-out {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-  100% {
+  to {
     opacity: 0;
-    transform: translateY(-6px) scale(0.992);
-    filter: blur(2px);
+    transform: translateY(-4px);
   }
 }
 
 @keyframes vt-fade-in {
-  0% {
+  from {
     opacity: 0;
-    transform: translateY(10px) scale(0.992);
-    filter: blur(2px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
+    transform: translateY(6px);
   }
 }
 
 ::view-transition-group(root) {
-  animation-duration: 520ms;
+  animation-duration: 300ms;
   animation-timing-function: var(--ease-soft);
 }
 
 ::view-transition-old(root) {
-  animation: vt-fade-out 380ms var(--ease-soft) both;
+  animation: vt-fade-out 160ms ease-out both;
   mix-blend-mode: normal;
 }
 
 ::view-transition-new(root) {
-  animation: vt-fade-in 520ms 80ms var(--ease-soft) both;
+  animation: vt-fade-in 280ms 40ms var(--ease-soft) both;
   mix-blend-mode: normal;
 }
 
