@@ -2,6 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  /* root の page transition から分離して遷移中も静止させる (animations.css 参照) */
+  view-transition-name: site-header;
   backdrop-filter: saturate(160%) blur(14px);
   -webkit-backdrop-filter: saturate(160%) blur(14px);
   background: color-mix(in oklab, var(--bg) 85%, transparent);

@@ -482,6 +482,13 @@
   mix-blend-mode: normal;
 }
 
+/* ヘッダーは遷移前後で変化しないので、フェードもドリフトもさせず静止させる */
+::view-transition-group(site-header),
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation: none;
+}
+
 /*
  * reduced-motion 配下では:
  * - infinite ループ系(cat-idle / sparkle-bob / tail-wag 等)は 1回で停止
@@ -490,8 +497,9 @@
  *   (vestibular 影響は小さく、accessibility feedback として有用なため)
  */
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
     animation: none !important;
   }
   *,
