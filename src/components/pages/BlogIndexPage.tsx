@@ -56,6 +56,7 @@ export function BlogIndexPage({ locale, posts, tags }: BlogIndexPageProps) {
             type="button"
             className="blog-index__tag blog-index__tag--all"
             data-active={activeTag === null ? 'true' : 'false'}
+            aria-pressed={activeTag === null}
             onClick={() => setActiveTag(null)}
           >
             {dict.blog.filterAll}
@@ -69,6 +70,7 @@ export function BlogIndexPage({ locale, posts, tags }: BlogIndexPageProps) {
                 type="button"
                 className="blog-index__tag"
                 data-active={activeTag === tag ? 'true' : 'false'}
+                aria-pressed={activeTag === tag}
                 data-extra={isExtra ? 'true' : 'false'}
                 data-pinned={pinActive ? 'true' : 'false'}
                 style={

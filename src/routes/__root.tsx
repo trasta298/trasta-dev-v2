@@ -17,7 +17,6 @@ export const Route = createRootRoute({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'theme-color', content: '#fffefd' },
       { property: 'og:site_name', content: SITE.name },
       {
         property: 'og:image',
@@ -26,6 +25,16 @@ export const Route = createRootRoute({
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
     links: [
+      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+      {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossOrigin: 'anonymous',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap',
+      },
       { rel: 'stylesheet', href: globalCss },
       { rel: 'icon', type: 'image/png', href: '/images/trasta.png' },
     ],
@@ -39,6 +48,17 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
+        {/* HeadContent は同名 meta を dedupe するため media 付きペアはここに直接置く */}
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: light)"
+          content="#fffefd"
+        />
+        <meta
+          name="theme-color"
+          media="(prefers-color-scheme: dark)"
+          content="#181512"
+        />
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         {import.meta.env.PROD ? (
           <>

@@ -41,6 +41,35 @@
   flex-shrink: 0;
 }
 
+.heading-anchor {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.8em;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 180ms ease, color 180ms ease;
+}
+
+.article-prose h3 .heading-anchor {
+  margin-left: 0.4em;
+}
+
+.article-prose :is(h2, h3):hover .heading-anchor,
+.heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.heading-anchor:hover {
+  color: var(--accent-strong);
+}
+
+/* hover のないタッチ端末では薄く常時表示 */
+@media (hover: none) {
+  .heading-anchor {
+    opacity: 0.45;
+  }
+}
+
 .article-prose h3 {
   margin-top: 2.2em;
   margin-bottom: 0.55em;
@@ -178,8 +207,12 @@
     18px no-repeat;
 }
 
+/* 幅の広い表はページ全体を広げず表だけ横スクロール (GitHub と同じ手法) */
 .article-prose table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   font-size: 0.92rem;
   margin: 1.4rem 0;

@@ -3,13 +3,6 @@ import './theme-toggle.css'
 
 type Resolved = 'light' | 'dark'
 
-function readResolved(): Resolved {
-  if (typeof window === 'undefined') return 'light'
-  const stored = window.localStorage.getItem('theme')
-  if (stored === 'light' || stored === 'dark') return stored
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
 function applyResolved(resolved: Resolved, isExplicit: boolean) {
   if (typeof document === 'undefined') return
   const root = document.documentElement
@@ -21,55 +14,58 @@ function applyResolved(resolved: Resolved, isExplicit: boolean) {
 }
 
 export function ThemeToggle() {
-  const [resolved, setResolved] = useState<Resolved>('light')
   const [explicit, setExplicit] = useState(false)
-  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     const stored = window.localStorage.getItem('theme')
-    const isExplicit = stored === 'light' || stored === 'dark'
-    const r = readResolved()
-    setResolved(r)
-    setExplicit(isExplicit)
-    applyResolved(r, isExplicit)
-    setMounted(true)
+    setExplicit(stored === 'light' || stored === 'dark')
   }, [])
 
   useEffect(() => {
     if (explicit) return
     const media = window.matchMedia('(prefers-color-scheme: dark)')
     const onChange = () => {
-      const next: Resolved = media.matches ? 'dark' : 'light'
-      setResolved(next)
-      applyResolved(next, false)
+      applyResolved(media.matches ? 'dark' : 'light', false)
     }
     media.addEventListener('change', onChange)
     return () => media.removeEventListener('change', onChange)
   }, [explicit])
 
   function toggle() {
-    const next: Resolved = resolved === 'light' ? 'dark' : 'light'
-    setResolved(next)
+    const isDark = document.documentElement.classList.contains('dark')
+    const next: Resolved = isDark ? 'light' : 'dark'
     setExplicit(true)
     applyResolved(next, true)
     window.localStorage.setItem('theme', next)
   }
 
-  const label = `theme: ${resolved}`
-
+  // アイコン/ラベルは両方描画して root のクラスで CSS 切替 (hydration 前の light フラッシュ防止)
   return (
     <button
       type="button"
       className="theme-toggle"
       onClick={toggle}
-      aria-label={label}
-      title={label}
-      data-mounted={mounted ? 'true' : 'false'}
+      aria-label="toggle theme"
+      title="toggle theme"
     >
-      <span className="theme-toggle__icon" aria-hidden="true">
-        {resolved === 'dark' ? <MoonIcon /> : <SunIcon />}
+      <span
+        className="theme-toggle__icon theme-toggle__icon--sun"
+        aria-hidden="true"
+      >
+        <SunIcon />
       </span>
-      <span className="theme-toggle__text">{resolved}</span>
+      <span
+        className="theme-toggle__icon theme-toggle__icon--moon"
+        aria-hidden="true"
+      >
+        <MoonIcon />
+      </span>
+      <span className="theme-toggle__text theme-toggle__text--light" aria-hidden="true">
+        light
+      </span>
+      <span className="theme-toggle__text theme-toggle__text--dark" aria-hidden="true">
+        dark
+      </span>
     </button>
   )
 }

@@ -131,6 +131,9 @@
     position: sticky;
     top: 5rem;
     margin-inline: 0;
+    /* 見出しの多い記事でも TOC が viewport からあふれないように */
+    max-height: calc(100dvh - 6rem);
+    overflow-y: auto;
   }
 }
 

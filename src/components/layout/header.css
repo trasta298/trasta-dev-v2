@@ -91,4 +91,8 @@
     padding-top: 0.25rem;
     gap: 1.2rem;
   }
+  /* タップターゲットを広げる */
+  .site-nav__link {
+    padding: 0.55rem 0.3rem;
+  }
 }

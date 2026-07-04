@@ -64,7 +64,6 @@ type Dict = {
     home: string
     blog: string
   }
-  themeAria: (mode: string) => string
   langSwitcher: { label: string; ja: string; en: string }
 }
 
@@ -160,7 +159,6 @@ export const DICT: Record<Locale, Dict> = {
       home: 'home へ戻る',
       blog: 'read the blog',
     },
-    themeAria: (mode) => `theme: ${mode}`,
     langSwitcher: { label: 'language', ja: '日本語', en: 'english' },
   },
   en: {
@@ -254,7 +252,6 @@ export const DICT: Record<Locale, Dict> = {
       home: 'back home',
       blog: 'read the blog',
     },
-    themeAria: (mode) => `theme: ${mode}`,
     langSwitcher: { label: 'language', ja: '日本語', en: 'english' },
   },
 }

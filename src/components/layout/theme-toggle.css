@@ -44,8 +44,46 @@
   line-height: 0;
 }
 
+/* 現在テーマの表示切替は root のクラス/属性に追従 (hydration 前も正しく出す) */
+.theme-toggle__icon--moon,
+.theme-toggle__text--dark {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle__icon--sun,
+:root[data-theme="dark"] .theme-toggle__text--light,
+:root.dark .theme-toggle__icon--sun,
+:root.dark .theme-toggle__text--light {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle__icon--moon,
+:root.dark .theme-toggle__icon--moon {
+  display: inline-flex;
+}
+
+:root[data-theme="dark"] .theme-toggle__text--dark,
+:root.dark .theme-toggle__text--dark {
+  display: inline;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not(.light) .theme-toggle__icon--sun,
+  :root:not([data-theme="light"]):not(.light) .theme-toggle__text--light {
+    display: none;
+  }
+
+  :root:not([data-theme="light"]):not(.light) .theme-toggle__icon--moon {
+    display: inline-flex;
+  }
+
+  :root:not([data-theme="light"]):not(.light) .theme-toggle__text--dark {
+    display: inline;
+  }
+}
+
 @media (max-width: 480px) {
   .theme-toggle__text {
-    display: none;
+    display: none !important;
   }
 }

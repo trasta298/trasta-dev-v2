@@ -5,6 +5,8 @@ export function getRouter() {
   const router = createTanStackRouter({
     routeTree,
     scrollRestoration: true,
+    // html { scroll-behavior: smooth } をページ遷移時の復元にまで効かせない
+    scrollRestorationBehavior: 'instant',
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
     defaultViewTransition: true,

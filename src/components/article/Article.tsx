@@ -8,8 +8,32 @@ import { Callout } from '../embeds/Callout'
 import 'react-tweet/theme.css'
 import './article.css'
 
+function createHeading(Tag: 'h2' | 'h3') {
+  return function Heading({
+    children,
+    ...props
+  }: React.HTMLAttributes<HTMLHeadingElement>) {
+    return (
+      <Tag {...props}>
+        {children}
+        {props.id ? (
+          <a
+            href={`#${props.id}`}
+            className="heading-anchor bare"
+            aria-label="permalink"
+          >
+            #
+          </a>
+        ) : null}
+      </Tag>
+    )
+  }
+}
+
 const components: MDXComponents = {
   pre: (props) => <CodeBlock {...props} />,
+  h2: createHeading('h2'),
+  h3: createHeading('h3'),
   LinkCard,
   XPost,
   Callout,
