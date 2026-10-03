@@ -32,6 +32,7 @@ function createHeading(Tag: 'h2' | 'h3') {
 
 const components: MDXComponents = {
   pre: (props) => <CodeBlock {...props} />,
+  img: (props) => <img loading="lazy" decoding="async" {...props} />,
   h2: createHeading('h2'),
   h3: createHeading('h3'),
   LinkCard,

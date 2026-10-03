@@ -52,7 +52,7 @@
   letter-spacing: 0.04em;
   font-family: var(--font-mono);
   font-size: 0.64rem;
-  color: var(--muted);
+  color: var(--ink-soft);
   border: 1px solid var(--code-line);
   border-radius: 999px;
   padding: 0 0.45rem;
@@ -61,9 +61,10 @@
 
 .code-block__copy {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.72rem;
   letter-spacing: 0.06em;
-  padding: 0.05rem 0.55rem;
+  min-height: 28px;
+  padding: 0.2rem 0.7rem;
   border-radius: 999px;
   border: 1px solid var(--line-soft);
   background: var(--card);

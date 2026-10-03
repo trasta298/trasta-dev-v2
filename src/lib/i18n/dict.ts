@@ -55,6 +55,7 @@ type Dict = {
     sign: string
   }
   toc: { label: string }
+  code: { copy: string; copied: string }
   share: { label: string; copy: string; copied: string; copiedSr: string; share: string; xAria: string }
   notFound: {
     kicker: string
@@ -148,6 +149,7 @@ export const DICT: Record<Locale, Dict> = {
       sign: '— trasta',
     },
     toc: { label: '目次' },
+    code: { copy: 'コードをコピー', copied: 'コードをコピーしました' },
     share: {
       label: 'share',
       copy: 'copy url',
@@ -247,6 +249,7 @@ export const DICT: Record<Locale, Dict> = {
       sign: '— trasta',
     },
     toc: { label: 'contents' },
+    code: { copy: 'copy code', copied: 'code copied to clipboard' },
     share: {
       label: 'share',
       copy: 'copy url',

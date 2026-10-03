@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react'
+import { useLocale } from '../../lib/i18n/locale'
+import { getDict } from '../../lib/i18n/dict'
 import './code-block.css'
 
 type PreProps = {
@@ -17,6 +19,7 @@ function getMetaValue(meta: string | undefined, key: string): string | undefined
 export function CodeBlock(props: PreProps) {
   const ref = useRef<HTMLPreElement>(null)
   const [copied, setCopied] = useState(false)
+  const dict = getDict(useLocale())
 
   const lang = props['data-language']
   const metaString = props['data-meta'] ?? ''
@@ -58,7 +61,7 @@ export function CodeBlock(props: PreProps) {
           onClick={copy}
           className="code-block__copy"
           data-state={copied ? 'copied' : 'idle'}
-          aria-label={copied ? 'コードをコピーしました' : 'コードをコピー'}
+          aria-label={copied ? dict.code.copied : dict.code.copy}
         >
           {copied ? 'copied!' : 'copy'}
         </button>
@@ -68,7 +71,7 @@ export function CodeBlock(props: PreProps) {
           aria-atomic="true"
           className="code-block__sr"
         >
-          {copied ? 'コードをコピーしました' : ''}
+          {copied ? dict.code.copied : ''}
         </span>
       </div>
       <pre ref={ref} {...props} />
