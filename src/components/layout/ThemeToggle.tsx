@@ -13,11 +13,20 @@ function applyResolved(resolved: Resolved, isExplicit: boolean) {
   root.style.colorScheme = resolved
 }
 
+// Cookie ブロック環境では localStorage へのアクセス自体が SecurityError を投げる
+function readStoredTheme(): string | null {
+  try {
+    return window.localStorage.getItem('theme')
+  } catch {
+    return null
+  }
+}
+
 export function ThemeToggle() {
   const [explicit, setExplicit] = useState(false)
 
   useEffect(() => {
-    const stored = window.localStorage.getItem('theme')
+    const stored = readStoredTheme()
     setExplicit(stored === 'light' || stored === 'dark')
   }, [])
 
@@ -36,7 +45,9 @@ export function ThemeToggle() {
     const next: Resolved = isDark ? 'light' : 'dark'
     setExplicit(true)
     applyResolved(next, true)
-    window.localStorage.setItem('theme', next)
+    try {
+      window.localStorage.setItem('theme', next)
+    } catch {}
   }
 
   // アイコン/ラベルは両方描画して root のクラスで CSS 切替 (hydration 前の light フラッシュ防止)

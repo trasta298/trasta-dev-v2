@@ -1,4 +1,5 @@
 import { Tweet } from 'react-tweet'
+import { EmbedBoundary } from './EmbedBoundary'
 import './x-post.css'
 
 type XPostProps = {
@@ -12,12 +13,17 @@ export function XPost({ id, user }: XPostProps) {
     ? `https://x.com/${user}/status/${id}`
     : `https://x.com/i/web/status/${id}`
 
+  const fallback = <XPostFallback id={id} url={fallbackUrl} user={user} />
+
   return (
     <div className="x-post-embed">
-      <Tweet
-        id={id}
-        fallback={<XPostFallback id={id} url={fallbackUrl} user={user} />}
-      />
+      <EmbedBoundary fallback={fallback}>
+        <Tweet
+          id={id}
+          fallback={fallback}
+          components={{ TweetNotFound: () => fallback }}
+        />
+      </EmbedBoundary>
     </div>
   )
 }

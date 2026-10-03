@@ -64,6 +64,12 @@ type Dict = {
     home: string
     blog: string
   }
+  error: {
+    kicker: string
+    titleEn: string
+    lead: string
+    retry: string
+  }
   langSwitcher: { label: string; ja: string; en: string }
 }
 
@@ -159,6 +165,12 @@ export const DICT: Record<Locale, Dict> = {
       home: 'home へ戻る',
       blog: 'read the blog',
     },
+    error: {
+      kicker: 'error',
+      titleEn: 'broken',
+      lead: '表示中に問題が起きました。一時的なものかもしれないので、もう一度試すか、トップから辿ってみてください。',
+      retry: 'もう一度試す',
+    },
     langSwitcher: { label: 'language', ja: '日本語', en: 'english' },
   },
   en: {
@@ -251,6 +263,12 @@ export const DICT: Record<Locale, Dict> = {
         'this URL has moved, or never existed. head back home and follow the blog or works links instead.',
       home: 'back home',
       blog: 'read the blog',
+    },
+    error: {
+      kicker: 'error',
+      titleEn: 'broken',
+      lead: 'something went wrong while rendering this page. it may be temporary — try again, or head back home.',
+      retry: 'try again',
     },
     langSwitcher: { label: 'language', ja: '日本語', en: 'english' },
   },

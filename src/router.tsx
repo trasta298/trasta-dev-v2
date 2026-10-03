@@ -1,5 +1,6 @@
 import { createRouter as createTanStackRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
+import { SiteError } from './components/layout/SiteError'
 
 export function getRouter() {
   const router = createTanStackRouter({
@@ -10,6 +11,7 @@ export function getRouter() {
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
     defaultViewTransition: true,
+    defaultErrorComponent: SiteError,
   })
 
   return router
