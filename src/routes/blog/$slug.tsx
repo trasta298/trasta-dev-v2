@@ -21,7 +21,7 @@ export const Route = createFileRoute('/blog/$slug')({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {}
-    const { meta, links } = buildHead({
+    const { meta, links, scripts } = buildHead({
       title: loaderData.frontmatter.title,
       description: loaderData.frontmatter.description,
       url: `/blog/${loaderData.slug}`,
@@ -34,7 +34,7 @@ export const Route = createFileRoute('/blog/$slug')({
       tags: loaderData.frontmatter.tags,
       locale: LOCALE,
     })
-    return { meta, links }
+    return { meta, links, scripts }
   },
   component: BlogPostRoute,
 })
