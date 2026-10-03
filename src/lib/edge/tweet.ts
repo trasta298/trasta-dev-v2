@@ -8,8 +8,9 @@ export function isTweetRequest(pathname: string): boolean {
 }
 
 export async function handleTweetRequest(request: Request): Promise<Response> {
-  const id = TWEET_PATTERN.exec(new URL(request.url).pathname)![1]
-  return edgeCached('tweet', request.url, async () => {
+  const url = new URL(request.url)
+  const id = TWEET_PATTERN.exec(url.pathname)![1]
+  return edgeCached('tweet', `${url.origin}${url.pathname}`, async () => {
     try {
       // Workers の fetch は User-Agent を付けず、syndication API は UA なしだと 400 を返す
       const tweet = await getTweet(id, { headers: { 'user-agent': 'trasta.dev (+https://trasta.dev)' } })
