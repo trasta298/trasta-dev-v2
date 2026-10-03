@@ -5,6 +5,8 @@ import { CodeBlock } from './CodeBlock'
 import { LinkCard } from '../embeds/LinkCard'
 import { XPost } from '../embeds/XPost'
 import { Callout } from '../embeds/Callout'
+import { useLocale } from '../../lib/i18n/locale'
+import { getDict } from '../../lib/i18n/dict'
 import 'react-tweet/theme.css'
 import './article.css'
 
@@ -13,6 +15,7 @@ function createHeading(Tag: 'h2' | 'h3') {
     children,
     ...props
   }: React.HTMLAttributes<HTMLHeadingElement>) {
+    const dict = getDict(useLocale())
     return (
       <Tag {...props}>
         {children}
@@ -20,7 +23,7 @@ function createHeading(Tag: 'h2' | 'h3') {
           <a
             href={`#${props.id}`}
             className="heading-anchor bare"
-            aria-label="permalink"
+            aria-label={dict.toc.anchor}
           >
             #
           </a>
