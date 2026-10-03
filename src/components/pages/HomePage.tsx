@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import type { Locale } from '../../lib/i18n/locale'
 import { localizePath } from '../../lib/i18n/locale'
 import { getDict } from '../../lib/i18n/dict'
+import { formatDate } from '../../lib/i18n/date'
 import type { BlogFrontmatter, WorkFrontmatter } from '../../lib/content/types'
 
 export type HomePageProps = {
@@ -184,15 +185,6 @@ function siteFromUrl(url: string | undefined): string | undefined {
   } catch {
     return undefined
   }
-}
-
-function formatDate(iso: string, locale: Locale): string {
-  const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return iso
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return locale === 'en' ? `${y}-${m}-${day}` : `${y}.${m}.${day}`
 }
 
 function accentForIndex(i: number): 'yellow' | 'mint' | 'pink' | 'lavender' {
