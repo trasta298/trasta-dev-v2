@@ -1,5 +1,6 @@
-import { env, waitUntil } from 'cloudflare:workers'
+import { env } from 'cloudflare:workers'
 import { ImageResponse, loadGoogleFont } from 'workers-og'
+import { edgeCached } from '../edge/cache'
 import { getPostBySlug } from '../content/blog'
 import { getWorkBySlug } from '../content/works'
 import type { Locale } from '../i18n/locale'
@@ -120,21 +121,14 @@ function fnv1a(text: string): string {
   return (hash >>> 0).toString(36)
 }
 
-// Worker の応答は CDN にキャッシュされず毎回生成になるので Cache API に置く。
 // 入力をキーに含め、記事のタイトル等を変えたら作り直されるようにする
-async function cached(
+function cached(
   request: Request,
   input: unknown,
   render: () => Promise<Response>,
 ): Promise<Response> {
   const url = new URL(request.url)
-  const key = new Request(`${url.origin}${url.pathname}?v=${fnv1a(JSON.stringify(input))}`)
-  const cache = await caches.open('og')
-  const hit = await cache.match(key)
-  if (hit) return hit
-  const res = await render()
-  if (res.ok) waitUntil(cache.put(key, res.clone()))
-  return res
+  return edgeCached('og', `${url.origin}${url.pathname}?v=${fnv1a(JSON.stringify(input))}`, render)
 }
 
 const FONT_DEFS = [

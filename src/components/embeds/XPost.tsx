@@ -20,6 +20,7 @@ export function XPost({ id, user }: XPostProps) {
       <EmbedBoundary fallback={fallback}>
         <Tweet
           id={id}
+          apiUrl={`/api/tweet/${id}`}
           fallback={fallback}
           components={{ TweetNotFound: () => fallback }}
         />

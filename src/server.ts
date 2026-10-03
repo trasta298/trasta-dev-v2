@@ -1,6 +1,7 @@
 import handler, { createServerEntry } from '@tanstack/react-start/server-entry'
 import { handleOgRequest, isOgRequest } from './lib/og/handler'
 import { hasLocaleVersion } from './lib/i18n/availability'
+import { handleTweetRequest, isTweetRequest } from './lib/edge/tweet'
 import { sitemapResponse } from './lib/seo/sitemap'
 
 const LANG_COOKIE = 'lang'
@@ -50,6 +51,10 @@ export default createServerEntry({
 
     if (request.method === 'GET' && isOgRequest(pathname)) {
       return handleOgRequest(request)
+    }
+
+    if (request.method === 'GET' && isTweetRequest(pathname)) {
+      return handleTweetRequest(request)
     }
 
     if (request.method === 'GET' && pathname === '/sitemap.xml') {
