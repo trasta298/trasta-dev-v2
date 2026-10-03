@@ -8,9 +8,10 @@ import './blog-post.css'
 const LOCALE = 'ja' as const
 
 export const Route = createFileRoute('/blog/$slug')({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const post = getPostBySlug(params.slug, LOCALE)
     if (!post || post.frontmatter.externalUrl) throw notFound()
+    await post.preload()
     return {
       slug: post.slug,
       frontmatter: post.frontmatter,

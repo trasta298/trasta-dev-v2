@@ -14,6 +14,7 @@ describe.each(LOCALES)('content (%s)', (locale) => {
       expect(post.frontmatter.publishedAt).toMatch(ISO_DATE)
       if (post.frontmatter.updatedAt) expect(post.frontmatter.updatedAt).toMatch(ISO_DATE)
       expect(Array.isArray(post.frontmatter.tags)).toBe(true)
+      expect(post.readingMinutes).toBeGreaterThanOrEqual(1)
     },
   )
 
@@ -24,6 +25,17 @@ describe.each(LOCALES)('content (%s)', (locale) => {
       expect(Array.isArray(work.frontmatter.tags)).toBe(true)
     },
   )
+})
+
+describe('lazy bodies', () => {
+  it('keeps toc metadata available without loading the body', () => {
+    expect(getAllPosts('ja').some((p) => p.toc.length > 0)).toBe(true)
+  })
+
+  it('loads the body component on demand', async () => {
+    const post = getAllPosts('ja')[0]
+    await expect(post.preload()).resolves.toBeUndefined()
+  })
 })
 
 describe('translations', () => {

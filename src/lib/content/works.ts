@@ -1,27 +1,29 @@
+import type { ComponentType } from 'react'
 import type { Locale } from '../i18n/locale'
-import type { MdxModule, WorkEntry, WorkFrontmatter } from './types'
+import { lazyBody } from './body'
+import type { WorkEntry, WorkFrontmatter } from './types'
 
-const jaModules = import.meta.glob<MdxModule<WorkFrontmatter>>(
-  '/src/content/works/*.mdx',
-  { eager: true },
+// ?meta は本文とは別モジュールになり、名前付き export だけ読むので本文はメイン chunk に入らない
+const frontmatters = import.meta.glob<WorkFrontmatter>(
+  ['/src/content/works/*.mdx', '/src/content/en/works/*.mdx'],
+  { eager: true, query: '?meta', import: 'frontmatter' },
 )
-const enModules = import.meta.glob<MdxModule<WorkFrontmatter>>(
-  '/src/content/en/works/*.mdx',
-  { eager: true },
+const bodies = import.meta.glob<ComponentType>(
+  ['/src/content/works/*.mdx', '/src/content/en/works/*.mdx'],
+  { import: 'default' },
 )
 
 function slugFromPath(path: string): string {
   return path.replace(/^.*\/works\//, '').replace(/\.mdx$/, '')
 }
 
-function buildEntries(
-  modules: Record<string, MdxModule<WorkFrontmatter>>,
-): WorkEntry[] {
-  return Object.entries(modules)
-    .map(([path, mod]) => ({
+function buildEntries(dir: string): WorkEntry[] {
+  return Object.entries(frontmatters)
+    .filter(([path]) => path.startsWith(dir))
+    .map(([path, frontmatter]) => ({
       slug: slugFromPath(path),
-      frontmatter: mod.frontmatter,
-      Component: mod.default,
+      frontmatter,
+      ...lazyBody(bodies[path]),
     }))
     .sort((a, b) => {
       const aDate = a.frontmatter.publishedAt
@@ -35,8 +37,8 @@ function buildEntries(
 }
 
 const entriesByLocale: Record<Locale, WorkEntry[]> = {
-  ja: buildEntries(jaModules),
-  en: buildEntries(enModules),
+  ja: buildEntries('/src/content/works/'),
+  en: buildEntries('/src/content/en/works/'),
 }
 
 export function getAllWorks(locale: Locale = 'ja'): ReadonlyArray<WorkEntry> {
