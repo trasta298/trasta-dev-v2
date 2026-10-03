@@ -55,6 +55,7 @@ type Dict = {
     sign: string
   }
   toc: { label: string }
+  code: { copy: string; copied: string }
   share: { label: string; copy: string; copied: string; copiedSr: string; share: string; xAria: string }
   notFound: {
     kicker: string
@@ -63,6 +64,12 @@ type Dict = {
     lead: string
     home: string
     blog: string
+  }
+  error: {
+    kicker: string
+    titleEn: string
+    lead: string
+    retry: string
   }
   langSwitcher: { label: string; ja: string; en: string }
 }
@@ -142,6 +149,7 @@ export const DICT: Record<Locale, Dict> = {
       sign: '— trasta',
     },
     toc: { label: '目次' },
+    code: { copy: 'コードをコピー', copied: 'コードをコピーしました' },
     share: {
       label: 'share',
       copy: 'copy url',
@@ -158,6 +166,12 @@ export const DICT: Record<Locale, Dict> = {
         'URL が変わったか、最初から存在しなかったようです。トップに戻って、blog や works から辿ってみてください。',
       home: 'home へ戻る',
       blog: 'read the blog',
+    },
+    error: {
+      kicker: 'error',
+      titleEn: 'broken',
+      lead: '表示中に問題が起きました。一時的なものかもしれないので、もう一度試すか、トップから辿ってみてください。',
+      retry: 'もう一度試す',
     },
     langSwitcher: { label: 'language', ja: '日本語', en: 'english' },
   },
@@ -235,6 +249,7 @@ export const DICT: Record<Locale, Dict> = {
       sign: '— trasta',
     },
     toc: { label: 'contents' },
+    code: { copy: 'copy code', copied: 'code copied to clipboard' },
     share: {
       label: 'share',
       copy: 'copy url',
@@ -251,6 +266,12 @@ export const DICT: Record<Locale, Dict> = {
         'this URL has moved, or never existed. head back home and follow the blog or works links instead.',
       home: 'back home',
       blog: 'read the blog',
+    },
+    error: {
+      kicker: 'error',
+      titleEn: 'broken',
+      lead: 'something went wrong while rendering this page. it may be temporary — try again, or head back home.',
+      retry: 'try again',
     },
     langSwitcher: { label: 'language', ja: '日本語', en: 'english' },
   },

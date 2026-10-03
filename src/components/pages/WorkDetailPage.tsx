@@ -58,7 +58,7 @@ export function WorkDetailPage({
 
       {frontmatter.image ? (
         <figure className="work-page__hero">
-          <img src={frontmatter.image} alt={frontmatter.title} loading="lazy" />
+          <img src={frontmatter.image} alt={frontmatter.title} fetchPriority="high" />
         </figure>
       ) : null}
 

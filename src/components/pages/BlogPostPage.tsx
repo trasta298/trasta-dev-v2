@@ -7,6 +7,7 @@ import { Sparkle } from '../motion/Sparkle'
 import type { Locale } from '../../lib/i18n/locale'
 import { localizePath } from '../../lib/i18n/locale'
 import { getDict } from '../../lib/i18n/dict'
+import { formatDate } from '../../lib/i18n/date'
 import { getPostBySlug } from '../../lib/content/blog'
 import type { BlogFrontmatter } from '../../lib/content/types'
 import type { TocItem } from '../../lib/toc/remark-toc'
@@ -108,15 +109,6 @@ export function BlogPostPage({
       </div>
     </article>
   )
-}
-
-function formatDate(iso: string, locale: Locale): string {
-  const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return iso
-  const y = d.getFullYear()
-  const m = String(d.getMonth() + 1).padStart(2, '0')
-  const day = String(d.getDate()).padStart(2, '0')
-  return locale === 'en' ? `${y}-${m}-${day}` : `${y}.${m}.${day}`
 }
 
 function accentForIndex(i: number): 'yellow' | 'mint' | 'pink' | 'lavender' {

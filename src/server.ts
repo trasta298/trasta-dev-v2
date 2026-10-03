@@ -1,5 +1,7 @@
 import handler, { createServerEntry } from '@tanstack/react-start/server-entry'
 import { handleOgRequest, isOgRequest } from './lib/og/handler'
+import { hasLocaleVersion } from './lib/i18n/availability'
+import { sitemapResponse } from './lib/seo/sitemap'
 
 const LANG_COOKIE = 'lang'
 const SUPPORTED = ['ja', 'en'] as const
@@ -50,6 +52,15 @@ export default createServerEntry({
       return handleOgRequest(request)
     }
 
+    if (request.method === 'GET' && pathname === '/sitemap.xml') {
+      return sitemapResponse()
+    }
+
+    // 旧 Astro 版 (@astrojs/sitemap) が出していた URL を引き継ぐ
+    if (pathname === '/sitemap-index.xml' || pathname === '/sitemap-0.xml') {
+      return Response.redirect(new URL('/sitemap.xml', url).toString(), 301)
+    }
+
     if (
       request.method === 'GET' &&
       !isLocalizedPath(pathname) &&
@@ -60,7 +71,8 @@ export default createServerEntry({
       const preferred =
         cookieLang ?? preferredFromAcceptLanguage(request.headers.get('accept-language'))
 
-      if (preferred === 'en') {
+      // en 版がない記事は en ルート側が ja に戻すので、ここで送るとループする
+      if (preferred === 'en' && hasLocaleVersion(pathname, 'en')) {
         const target = pathname === '/' ? '/en' : `/en${pathname}`
         const location = `${target}${url.search}`
         return new Response(null, {

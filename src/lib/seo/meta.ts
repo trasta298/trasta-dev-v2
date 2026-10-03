@@ -1,5 +1,6 @@
 import type { Locale } from '../i18n/locale'
 import { localizePath } from '../i18n/locale'
+import { hasLocaleVersion } from '../i18n/availability'
 import { homeOgImage } from '../og/url'
 import { SITE, siteCopy } from './site'
 
@@ -52,6 +53,7 @@ export function buildHead({
         : canonicalPath
   const altPath = localizePath(stripped, altLocale)
   const altUrl = new URL(altPath, SITE.url).toString()
+  const hasAlt = hasLocaleVersion(stripped, altLocale)
 
   const tagMeta = (tags ?? []).map((t) => ({ property: 'article:tag', content: t }))
 
@@ -65,7 +67,7 @@ export function buildHead({
     { property: 'og:site_name', content: SITE.name },
     { property: 'og:image', content: new URL(ogImage, SITE.url).toString() },
     { property: 'og:locale', content: copy.ogLocale },
-    { property: 'og:locale:alternate', content: altCopy.ogLocale },
+    ...(hasAlt ? [{ property: 'og:locale:alternate', content: altCopy.ogLocale }] : []),
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: fullTitle },
     { name: 'twitter:description', content: desc },
@@ -82,7 +84,7 @@ export function buildHead({
   const links: LinkTag[] = [
     { rel: 'canonical', href: canonical },
     { rel: 'alternate', hrefLang: copy.htmlLang, href: canonical },
-    { rel: 'alternate', hrefLang: altCopy.htmlLang, href: altUrl },
+    ...(hasAlt ? [{ rel: 'alternate', hrefLang: altCopy.htmlLang, href: altUrl }] : []),
     {
       rel: 'alternate',
       hrefLang: 'x-default',

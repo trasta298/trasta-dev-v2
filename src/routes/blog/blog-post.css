@@ -45,7 +45,8 @@
   line-height: 1.32;
   display: inline-block;
   position: relative;
-  max-width: 100%;
+  /* 右肩の Sparkle (right: -22px) が画面外にはみ出さない分だけ空ける */
+  max-width: calc(100% - 24px);
 }
 
 .post-page__title-text {
