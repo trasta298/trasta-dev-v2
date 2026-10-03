@@ -76,9 +76,11 @@ export function getPostBySlug(
 }
 
 export function getAllTags(locale: Locale = 'ja'): ReadonlyArray<string> {
-  const seen = new Set<string>()
+  const counts = new Map<string, number>()
   for (const entry of entriesByLocale[locale]) {
-    for (const tag of entry.frontmatter.tags) seen.add(tag)
+    for (const tag of entry.frontmatter.tags) counts.set(tag, (counts.get(tag) ?? 0) + 1)
   }
-  return [...seen].sort((a, b) => a.localeCompare(b))
+  return [...counts.keys()].sort(
+    (a, b) => counts.get(b)! - counts.get(a)! || a.localeCompare(b),
+  )
 }
