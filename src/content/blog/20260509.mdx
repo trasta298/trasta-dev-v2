@@ -11,7 +11,7 @@ tags: ["isunarabe","Codex","Go"]
 
 [isunarabe](https://isunarabe.org) での ISUCON の合同演習に、Codex 一本で参戦して 4 位フィニッシュでした。100% Codex に丸投げで1行もコードを読まずにフィニッシュしました。何を投げて Codex がどう返してきたかを、残しておきます。
 
-![](/images/blog/isunarabe-leaderboard.png)
+![isunarabe 合同演習の最終リーダーボード（trasta は 4 位）](/images/blog/isunarabe-leaderboard.png)
 
 環境はインスタンスに直接 Codex をインストールして、Codex app の SSH 経由で繋いで編集する構成です。webapp はもともと Rust 実装で、コンテスト中に Go へ書き換える方針で進めました。
 
@@ -165,7 +165,7 @@ export ISUNARABE_COOKIE='SESSION=...'
 
 実装をやらせてて、途中経過でおもしろかったところ
 
-![](/images/blog/isunarabe-bench-revert.png)
+![スコア低下を受けて変更を戻すと判断する Codex の出力](/images/blog/isunarabe-bench-revert.png)
 
 引用するとこんな感じです。
 

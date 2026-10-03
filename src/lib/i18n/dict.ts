@@ -54,7 +54,7 @@ type Dict = {
     links: { title: string; xLabel: string; ghLabel: string; mailLabel: string }
     sign: string
   }
-  toc: { label: string }
+  toc: { label: string; anchor: string }
   code: { copy: string; copied: string }
   share: { label: string; copy: string; copied: string; copiedSr: string; share: string; xAria: string }
   notFound: {
@@ -148,7 +148,7 @@ export const DICT: Record<Locale, Dict> = {
       links: { title: 'リンク', xLabel: 'x', ghLabel: 'github', mailLabel: 'mail' },
       sign: '— trasta',
     },
-    toc: { label: '目次' },
+    toc: { label: '目次', anchor: 'この見出しへのリンク' },
     code: { copy: 'コードをコピー', copied: 'コードをコピーしました' },
     share: {
       label: 'share',
@@ -248,7 +248,7 @@ export const DICT: Record<Locale, Dict> = {
       links: { title: 'find me', xLabel: 'x', ghLabel: 'github', mailLabel: 'mail' },
       sign: '— trasta',
     },
-    toc: { label: 'contents' },
+    toc: { label: 'contents', anchor: 'link to this section' },
     code: { copy: 'copy code', copied: 'code copied to clipboard' },
     share: {
       label: 'share',

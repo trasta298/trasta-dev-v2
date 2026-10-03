@@ -18,6 +18,7 @@ type MetaArgs = {
 
 type MetaTag = Record<string, string>
 type LinkTag = Record<string, string>
+type ScriptTag = { type: string; children: string }
 
 export function buildMeta(args: MetaArgs): MetaTag[] {
   return buildHead(args).meta
@@ -33,7 +34,7 @@ export function buildHead({
   updatedAt,
   tags,
   locale = 'ja',
-}: MetaArgs): { meta: MetaTag[]; links: LinkTag[] } {
+}: MetaArgs): { meta: MetaTag[]; links: LinkTag[]; scripts: ScriptTag[] } {
   const copy = siteCopy(locale)
   const fullTitle = title
     ? `${title} — ${SITE.name}`
@@ -69,6 +70,7 @@ export function buildHead({
     { property: 'og:locale', content: copy.ogLocale },
     ...(hasAlt ? [{ property: 'og:locale:alternate', content: altCopy.ogLocale }] : []),
     { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:site', content: SITE.twitter },
     { name: 'twitter:title', content: fullTitle },
     { name: 'twitter:description', content: desc },
     { name: 'twitter:image', content: new URL(ogImage, SITE.url).toString() },
@@ -92,5 +94,32 @@ export function buildHead({
     },
   ]
 
-  return { meta, links }
+  const scripts: ScriptTag[] =
+    type === 'article' && publishedAt
+      ? [
+          {
+            type: 'application/ld+json',
+            // innerHTML として埋め込まれるので、タイトル中の </script> で抜けられないようにする
+            children: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              headline: title,
+              description: desc,
+              datePublished: publishedAt,
+              ...(updatedAt ? { dateModified: updatedAt } : {}),
+              inLanguage: copy.htmlLang,
+              keywords: tags ?? [],
+              image: new URL(ogImage, SITE.url).toString(),
+              mainEntityOfPage: canonical,
+              author: {
+                '@type': 'Person',
+                name: SITE.author,
+                url: new URL(localizePath('/about', locale), SITE.url).toString(),
+              },
+            }).replace(/</g, '\\u003c'),
+          },
+        ]
+      : []
+
+  return { meta, links, scripts }
 }

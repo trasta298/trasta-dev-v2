@@ -1,0 +1,7 @@
+/* Google Fonts の <link> は Cloudflare Fonts に書き換えられ、hydration 後に React が入れ直して二重取得になるので自前で配信する */
+@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource/zen-kaku-gothic-new/400.css";
+@import "@fontsource/zen-kaku-gothic-new/500.css";
+@import "@fontsource/zen-kaku-gothic-new/700.css";
+@import "@fontsource/zen-kaku-gothic-new/900.css";

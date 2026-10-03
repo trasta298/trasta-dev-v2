@@ -8,9 +8,10 @@ import './work-detail.css'
 const LOCALE = 'ja' as const
 
 export const Route = createFileRoute('/works/$slug')({
-  loader: ({ params }) => {
+  loader: async ({ params }) => {
     const work = getWorkBySlug(params.slug, LOCALE)
     if (!work) throw notFound()
+    await work.preload()
     return { slug: work.slug, frontmatter: work.frontmatter }
   },
   head: ({ loaderData }) => {

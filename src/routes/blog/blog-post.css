@@ -117,6 +117,10 @@
     gap: 3rem;
     align-items: start;
   }
+  /* 本文は TOC を除いた列の中央に置かれるので、タイトルもその列に合わせて左端を揃える */
+  .post-page__head {
+    margin-left: max(0px, (100% - 220px - 3rem - var(--content-width)) / 2);
+  }
 }
 
 .post-page__sidebar {

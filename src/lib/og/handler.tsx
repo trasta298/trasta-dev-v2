@@ -1,5 +1,6 @@
 import { env } from 'cloudflare:workers'
 import { ImageResponse, loadGoogleFont } from 'workers-og'
+import { edgeCached } from '../edge/cache'
 import { getPostBySlug } from '../content/blog'
 import { getWorkBySlug } from '../content/works'
 import type { Locale } from '../i18n/locale'
@@ -106,8 +107,28 @@ export function isOgRequest(pathname: string): boolean {
   return DETAIL_PATTERN.test(pathname) || HOME_PATTERN.test(pathname)
 }
 
+// タイトル等を変えると同じ URL で中身が変わるので immutable にはしない
 const CACHE_HEADERS = {
-  'Cache-Control': 'public, max-age=3600, s-maxage=86400, immutable',
+  'Cache-Control': 'public, max-age=3600, s-maxage=604800',
+}
+
+function fnv1a(text: string): string {
+  let hash = 0x811c9dc5
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193)
+  }
+  return (hash >>> 0).toString(36)
+}
+
+// 入力をキーに含め、記事のタイトル等を変えたら作り直されるようにする
+function cached(
+  request: Request,
+  input: unknown,
+  render: () => Promise<Response>,
+): Promise<Response> {
+  const url = new URL(request.url)
+  return edgeCached('og', `${url.origin}${url.pathname}?v=${fnv1a(JSON.stringify(input))}`, render)
 }
 
 const FONT_DEFS = [
@@ -146,25 +167,29 @@ export async function handleOgRequest(request: Request): Promise<Response> {
   // workers-og の loadGoogleFont は text を URL エンコードせず連結するため、
   // '#' などフラグメント扱いされる文字を含むと以降のグリフが落ちる。
   const text = encodeURIComponent(collectGlyphText(input))
-  const [fonts, logoDataUrl] = await Promise.all([loadFonts(text), getLogoDataUrl(request)])
+  return cached(request, input, async () => {
+    const [fonts, logoDataUrl] = await Promise.all([loadFonts(text), getLogoDataUrl(request)])
 
-  return new ImageResponse(ogTemplate({ ...input, logoDataUrl }), {
-    width: 1200,
-    height: 630,
-    fonts,
-    headers: CACHE_HEADERS,
+    return new ImageResponse(ogTemplate({ ...input, logoDataUrl }), {
+      width: 1200,
+      height: 630,
+      fonts,
+      headers: CACHE_HEADERS,
+    })
   })
 }
 
 async function renderHome(request: Request, locale: Locale): Promise<Response> {
   const tagline = HOME_TAGLINES[locale]
   const text = encodeURIComponent(homeGlyphText(tagline))
-  const [fonts, tigerDataUrl] = await Promise.all([loadFonts(text), getTigerDataUrl(request)])
+  return cached(request, { locale, tagline }, async () => {
+    const [fonts, tigerDataUrl] = await Promise.all([loadFonts(text), getTigerDataUrl(request)])
 
-  return new ImageResponse(homeOgTemplate({ locale, tagline, tigerDataUrl }), {
-    width: 1200,
-    height: 630,
-    fonts,
-    headers: CACHE_HEADERS,
+    return new ImageResponse(homeOgTemplate({ locale, tagline, tigerDataUrl }), {
+      width: 1200,
+      height: 630,
+      fonts,
+      headers: CACHE_HEADERS,
+    })
   })
 }

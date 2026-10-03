@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react'
+import type { LazyBody } from './body'
 
 export type BlogFrontmatter = {
   title: string
@@ -25,11 +26,6 @@ export type WorkFrontmatter = {
   featured?: boolean
 }
 
-export type MdxModule<F> = {
-  default: ComponentType
-  frontmatter: F
-}
-
 export type BlogEntry = {
   slug: string
   frontmatter: BlogFrontmatter
@@ -40,5 +36,4 @@ export type BlogEntry = {
 export type WorkEntry = {
   slug: string
   frontmatter: WorkFrontmatter
-  Component: ComponentType
-}
+} & LazyBody

@@ -7,6 +7,7 @@ import { NotFound } from '../components/layout/NotFound'
 import { SITE, siteCopy } from '../lib/seo/site'
 import { useLocale } from '../lib/i18n/locale'
 import globalCss from '../styles/global.css?url'
+import fontsCss from '../styles/fonts.css?url'
 
 const THEME_INIT_SCRIPT = `(function(){try{var s=window.localStorage.getItem('theme');var explicit=(s==='light'||s==='dark');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;var r=explicit?s:(p?'dark':'light');var e=document.documentElement;e.classList.remove('light','dark');e.classList.add(r);if(explicit){e.setAttribute('data-theme',r)}else{e.removeAttribute('data-theme')}e.style.colorScheme=r;}catch(e){}})();`
 
@@ -27,16 +28,7 @@ export const Route = createRootRoute({
       { name: 'twitter:card', content: 'summary_large_image' },
     ],
     links: [
-      { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-      {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossOrigin: 'anonymous',
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap',
-      },
+      { rel: 'stylesheet', href: fontsCss },
       { rel: 'stylesheet', href: globalCss },
       { rel: 'icon', type: 'image/png', href: '/images/trasta.png' },
     ],
