@@ -1,0 +1,92 @@
+---
+title: "I Built isu-bench, a Benchmark That Makes AI Agents Solve ISUCON"
+description: "isu-bench measures how far a coding agent can speed up an ISUCON-style web service it has never seen, given 15 benchmark runs. I compared Opus 5.5, GPT-6.1 Sol, GPT-6 Astra and DeepSeek V4.1 Flash."
+publishedAt: "2026-11-03"
+tags: ["ISUCON","Claude Code","Codex"]
+---
+
+<Callout type="note">
+The text of this article was drafted by Claude and then edited by me.
+</Callout>
+
+I built isu-bench, which measures how far a coding agent can speed up an ISUCON-style web service it has never seen, given only 15 benchmark runs. This post also covers the results for Claude Opus 5.5, GPT-6.1 Sol, GPT-6 Astra and DeepSeek V4.1 Flash.
+
+<LinkCard
+  href="https://github.com/trasta298/isu-bench"
+  title="trasta298/isu-bench"
+  description="How far can a coding agent tune an ISUCON-style web service on its first encounter, given exactly 15 benchmark runs?"
+  site="github.com"
+/>
+
+Score charts for every run are at [isu-bench.trasta.dev](https://isu-bench.trasta.dev/).
+
+## Why I built it
+
+Before the ISUCON2026 contest on October 31, I compared models on past problems to decide which one to hand the contest to. In practice Opus clearly looked better, yet for some reason I went with Astra on the day and crashed and burned.
+
+After the contest, I rebuilt that comparison so anyone can run it under the same conditions, and that became isu-bench. There are also rumors of Astra 6.2 and Fable 5.5, and a big motivation was being ready to measure new models as soon as they come out.
+
+## Rules
+
+- The agent gets the docs, the reference implementation and SSH to three servers, and may run `bench` up to 15 times
+- Failed runs count too, and the 15th run's score is the final score. A FAIL scores 0
+- After the 15th run the three servers are rebooted; if the application does not respond, the score is 0
+- No time limit. If the agent stops early, it is resumed up to 3 times with "Continue. N of 15 benchmark runs remain."
+- Web search is disabled. All traffic goes through a proxy that only allows the model API, package registries and SSH to the servers
+
+Supported agents are Claude Code, Codex and DeepSeek Harness. Each run creates its own VPC and EC2 instances and deletes them all at the end.
+
+## Existing problems could not measure it
+
+I first measured on ISUCON14 and ISUCON13. On ISUCON14, Astra scored 592,820, about 10 times the contest winner's 58,153.
+
+The logs showed Astra never touched the benchmarker and only talked to ChatGPT and the contest servers, so it did not cheat. But solutions and post-contest write-ups for ISUCON14 are public, with post-contest scores of 410,000 to 860,000 reported. Astra went straight to a design at that level in about 27 minutes, and I cannot rule out that it knew the answer from its training data. You can block web search, but not a model's memory.
+
+## A new problem: ISUMAIL
+
+So I made a new problem for isu-bench, ISUMAIL. It is a newsletter delivery service: at the scheduled time it renders each subscriber's copy and hands it to an external mail provider. The provider requires a proof-of-work stamp per mail and keeps a reputation per sending server. The three servers differ in CPU architecture, speed and memory, and all traffic between them goes through a router that limits bandwidth.
+
+ISUMAIL also takes in elements of ISUCON2026, which came up in the contest.
+
+To keep it out of training data, the source (reference implementation, benchmarker, specification and the author's solution) is not on GitHub and ships only as public AMIs. So this post does not go into the problem any further than the README does.
+
+The problem design, reference implementation, benchmarker and author's solution were all made by Claude and Codex. I had subagents and Codex review it for how well it works as an ISUCON problem along the way. Honestly, nothing was particularly hard; the AI built it with ease. What times we live in.
+
+## Results
+
+![isu-bench v1 results](/images/blog/isu-bench-v1.png)
+
+The isu-bench score is the final ISUMAIL score divided by the author's solution, 327,660. Language is Go, one trial per configuration.
+
+| agent | model | effort | isu-bench score | final | agent time | output tokens |
+|---|---|---|---:|---:|---:|---:|
+| Claude Code | claude-opus-5-5 | high | **154%** | 505,329 | 159 min | 325,625 |
+| Codex | gpt-6.1-sol | xhigh | 73% | 238,875 | 73 min | 93,841 |
+| Codex | gpt-6-astra | xhigh | 41% | 135,079 | 74 min | 87,471 |
+| DeepSeek Harness | deepseek-v4.1-flash:1017 | max | 13% | 41,791 | 74 min | 235,222 |
+
+Only Opus beat the author's solution. Below it came Sol, Astra and DeepSeek, each 2 to 3 times apart from the next. Astra, which I used in the contest, scored 41%.
+
+## How Opus spent its time
+
+What stuck with me most was how Opus spent its time.
+
+Opus worked for 159 minutes, more than twice as long as the other three (73 to 74 minutes). Its output tokens, 325,625, are more than three times Sol's. The same Opus high finished ISUCON14 in 41 minutes.
+
+The biggest difference was at the start. Opus ran its first benchmark 3 minutes in, then worked for about 40 minutes without running another, and ran the second at the 43-minute mark. That second run scored 438,146, already above the author's solution. Sol and Astra ran the benchmark about every 5 minutes and raised their scores little by little over 15 runs.
+
+## Extras: ISUCON14 and ISUCON13
+
+Public solutions of ISUCON14 and ISUCON13 may be in the training data, so their results are kept as extras outside the score. They are in the lower half of the chart above and in the [README](https://github.com/trasta298/isu-bench#extras-isucon14-and-isucon13).
+
+## Cost
+
+One ISUMAIL run costs about $0.64 per hour in EC2. The four trials here came to about $4.2 in total: about $1.7 for Opus and about $0.8 each for the others. Including trial runs while making the problem and the ISUCON14 and 13 runs, November 1 and 2 cost about $17.
+
+For the models, Claude Code and Codex ran on their subscription logins, and DeepSeek ran through Ollama Cloud.
+
+## Adding models and donations
+
+I plan to measure Astra 6.2 and Fable 5.5 when they come out. If there is another model or agent you want measured, please ask in an [isu-bench issue](https://github.com/trasta298/isu-bench/issues).
+
+Every run costs money, so donations would make me very happy.
