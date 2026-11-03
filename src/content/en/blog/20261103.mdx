@@ -36,21 +36,53 @@ After the contest, I rebuilt that comparison so anyone can run it under the same
 
 Supported agents are Claude Code, Codex and DeepSeek Harness. Each run creates its own VPC and EC2 instances and deletes them all at the end.
 
-## Existing problems could not measure it
-
-I first measured on ISUCON14 and ISUCON13. On ISUCON14, Astra scored 592,820, about 10 times the contest winner's 58,153.
-
-The logs showed Astra never touched the benchmarker and only talked to ChatGPT and the contest servers, so it did not cheat. But solutions and post-contest write-ups for ISUCON14 are public, with post-contest scores of 410,000 to 860,000 reported. Astra went straight to a design at that level in about 27 minutes, and I cannot rule out that it knew the answer from its training data. You can block web search, but not a model's memory.
-
 ## A new problem: ISUMAIL
 
-So I made a new problem for isu-bench, ISUMAIL. It is a newsletter delivery service: at the scheduled time it renders each subscriber's copy and hands it to an external mail provider. The provider requires a proof-of-work stamp per mail and keeps a reputation per sending server. The three servers differ in CPU architecture, speed and memory, and all traffic between them goes through a router that limits bandwidth.
+I first measured on ISUCON14 and ISUCON13. But both problems are old, and the models may have learned their solutions, so I had no confidence that the numbers measured anything. To run on a problem no model has learned, I made a new one, ISUMAIL.
+
+ISUMAIL is a newsletter delivery service: at the scheduled time it renders each subscriber's copy and hands it to an external mail provider. The provider requires a proof-of-work stamp per mail and keeps a reputation per sending server. The three servers differ in CPU architecture, speed and memory, and all traffic between them goes through a router that limits bandwidth.
 
 ISUMAIL also takes in elements of ISUCON2026, which came up in the contest.
 
 To keep it out of training data, the source (reference implementation, benchmarker, specification and the author's solution) is not on GitHub and ships only as public AMIs. So this post does not go into the problem any further than the README does.
 
 The problem design, reference implementation, benchmarker and author's solution were all made by Claude and Codex. I had subagents and Codex review it for how well it works as an ISUCON problem along the way. Honestly, nothing was particularly hard; the AI built it with ease. What times we live in.
+
+## The prompt is not optimized
+
+The only thing the agent gets is the prompt below, which states the rules. Each agent's CLI is started headless with this prompt, with no instructions on how to proceed or how to use subagents. Neither the prompt nor the harness is optimized, so optimizing the harness the way the ISUCON2026 winner did would probably change the results.
+
+This is the prompt used for ISUMAIL. For ISUCON14 and ISUCON13 only the problem name and the description of the benchmark change.
+
+```text
+You are competing in ISUMAIL, a web application performance tuning contest.
+
+The contest manual and the application specification are in docs/ (in Japanese).
+The reference implementation is in webapp/.
+The application runs on three servers: s1, s2 and s3. Connect with `ssh s1` and so on;
+you log in as the `isucon` user, who has sudo. The initial Go implementation
+(isumail-go.service) is running, with its source in /home/isucon/webapp on each server.
+Your workspace and the servers reach the internet only through a proxy that allows
+package registries.
+
+Goal: maximize the score of your 15th benchmark run.
+
+- Run the benchmark with `bench`. It sends isumail.test to s1 and t.isumail.test to s3 through the router for 70 seconds, runs the provider, and prints the result.
+  You have exactly 15 runs. Every run counts, including failures.
+- The 15th run's result is your final score, and a FAIL scores 0. This session ends
+  as soon as the 15th run finishes.
+- After that, the three servers are rebooted. If the application does not come back
+  and respond, the score is 0.
+- There is no time limit.
+- You may change anything on the three servers, including code, language, database,
+  middleware, configuration and how the servers are used, as long as the application
+  behaves as the docs describe.
+- Parts of the manual about the contest schedule, the portal, CloudFormation, Discord,
+  support and the post-contest re-check do not apply; this prompt replaces them.
+- Do not look up ISUMAIL solutions, write-ups or the benchmarker source.
+
+No one will answer questions. Work autonomously until you have used all 15 runs.
+```
 
 ## Results
 
@@ -67,17 +99,7 @@ The isu-bench score is the final ISUMAIL score divided by the author's solution,
 
 Only Opus beat the author's solution. Below it came Sol, Astra and DeepSeek, each 2 to 3 times apart from the next. Astra, which I used in the contest, scored 41%.
 
-## How Opus spent its time
-
-What stuck with me most was how Opus spent its time.
-
-Opus worked for 159 minutes, more than twice as long as the other three (73 to 74 minutes). Its output tokens, 325,625, are more than three times Sol's. The same Opus high finished ISUCON14 in 41 minutes.
-
-The biggest difference was at the start. Opus ran its first benchmark 3 minutes in, then worked for about 40 minutes without running another, and ran the second at the 43-minute mark. That second run scored 438,146, already above the author's solution. Sol and Astra ran the benchmark about every 5 minutes and raised their scores little by little over 15 runs.
-
-## Extras: ISUCON14 and ISUCON13
-
-Public solutions of ISUCON14 and ISUCON13 may be in the training data, so their results are kept as extras outside the score. They are in the lower half of the chart above and in the [README](https://github.com/trasta298/isu-bench#extras-isucon14-and-isucon13).
+Public solutions of ISUCON14 and ISUCON13 may be in the training data, so their results are kept as extras outside the isu-bench score. They are in the lower half of the chart above and in the [README](https://github.com/trasta298/isu-bench#extras-isucon14-and-isucon13). On ISUCON14, Astra scored 592,820, about 10 times the contest winner's 58,153.
 
 ## Cost
 

@@ -36,21 +36,53 @@ tags: ["ISUCON","Claude Code","Codex"]
 
 エージェントは Claude Code、Codex、DeepSeek Harness に対応しています。計測のたびにVPCとEC2インスタンスを作り、終わったら全部消します。
 
-## 既存の問題では測れなかった
-
-最初はISUCON14とISUCON13で測りました。ISUCON14ではAstraが592,820点を出していて、これは本番の優勝点58,153点の約10倍です。
-
-ログを見ると、Astraはベンチマーカーに触れておらず、通信先もChatGPTと競技サーバーだけで、ズルはしていませんでした。ただ、ISUCON14は解法や感想戦の記事が公開されていて、感想戦では41万〜86万点が報告されています。Astraは約27分でその水準の設計にまっすぐたどり着いていて、学習データで答えを知っていた可能性は否定できません。Web検索は止められても、モデルの記憶は止められません。
-
 ## 新しい問題 ISUMAIL
 
-そこで、isu-bench のために ISUMAIL という新しい問題を作りました。ニュースレターの配信サービスで、予約時刻になると購読者ごとのメールを作り、外部のメール配信事業者に渡します。配信事業者はメールごとに計算証明を求め、送信元のサーバーごとに評判を持っています。3台のサーバーはCPUのアーキテクチャ、速さ、メモリがそれぞれ違い、サーバー間の通信はすべて帯域を制限するルーターを通る構成です。
+最初はISUCON14とISUCON13で測っていました。ただ、どちらも問題が古く、モデルが解法を学習しているかもしれないので、ちゃんと測れているかどうかの確証がありませんでした。そこで、学習されていない問題で走らせるために、ISUMAIL という新しい問題を作りました。
+
+ISUMAILはニュースレターの配信サービスで、予約時刻になると購読者ごとのメールを作り、外部のメール配信事業者に渡します。配信事業者はメールごとに計算証明を求め、送信元のサーバーごとに評判を持っています。3台のサーバーはCPUのアーキテクチャ、速さ、メモリがそれぞれ違い、サーバー間の通信はすべて帯域を制限するルーターを通る構成です。
 
 ISUMAILには本番で出たISUCON2026の要素も取り入れています。
 
 学習データに入らないよう、ソース（参照実装、ベンチマーカー、仕様、作問者の解）はGitHubに上げず、公開AMIでだけ配布しています。なので、この記事でも問題の中身はREADMEに書いた以上には触れません。
 
 問題の設計、参照実装、ベンチマーカー、作問者の解は、すべてClaudeとCodexに作らせました。subagentとCodexにISUCONの問題としての完成度をレビューさせながら進めています。正直、苦労したところは特になく、AIに簡単に作らせられました。すごい時代だなぁ。
+
+## プロンプトは最適化していない
+
+エージェントに渡しているのは、ルールを伝える下のプロンプトだけです。各エージェントのCLIをheadlessで起動してこのプロンプトを渡し、進め方やsubagentの使い方は指示していません。プロンプトもハーネスも最適化していないので、ISUCON2026の優勝者のようにハーネスを最適化すれば、結果は変わると思います。
+
+ISUMAILで使ったプロンプトはこれです。ISUCON14とISUCON13では、問題名とベンチの説明だけが変わります。
+
+```text
+You are competing in ISUMAIL, a web application performance tuning contest.
+
+The contest manual and the application specification are in docs/ (in Japanese).
+The reference implementation is in webapp/.
+The application runs on three servers: s1, s2 and s3. Connect with `ssh s1` and so on;
+you log in as the `isucon` user, who has sudo. The initial Go implementation
+(isumail-go.service) is running, with its source in /home/isucon/webapp on each server.
+Your workspace and the servers reach the internet only through a proxy that allows
+package registries.
+
+Goal: maximize the score of your 15th benchmark run.
+
+- Run the benchmark with `bench`. It sends isumail.test to s1 and t.isumail.test to s3 through the router for 70 seconds, runs the provider, and prints the result.
+  You have exactly 15 runs. Every run counts, including failures.
+- The 15th run's result is your final score, and a FAIL scores 0. This session ends
+  as soon as the 15th run finishes.
+- After that, the three servers are rebooted. If the application does not come back
+  and respond, the score is 0.
+- There is no time limit.
+- You may change anything on the three servers, including code, language, database,
+  middleware, configuration and how the servers are used, as long as the application
+  behaves as the docs describe.
+- Parts of the manual about the contest schedule, the portal, CloudFormation, Discord,
+  support and the post-contest re-check do not apply; this prompt replaces them.
+- Do not look up ISUMAIL solutions, write-ups or the benchmarker source.
+
+No one will answer questions. Work autonomously until you have used all 15 runs.
+```
 
 ## 結果
 
@@ -67,17 +99,7 @@ isu-benchスコアはISUMAILの最終点を作問者の解の327,660点で割っ
 
 作問者の解を超えたのはOpusだけで、その下はSol、Astra、DeepSeekの順で、隣どうしで2〜3倍ほど点が離れました。本番で使ったAstraは41%でした。
 
-## Opusの時間のかけ方
-
-一番印象に残ったのは、Opusの時間のかけ方です。
-
-Opusの作業時間は159分で、ほかの3つ（73〜74分）の2倍以上です。出力トークンも325,625で、Solの3倍以上あります。同じOpus highでも、ISUCON14では41分で終わっていました。
-
-特に違ったのは序盤です。Opusは開始3分で1回目のベンチを回したあと、40分ほどベンチを回さずに作業し、43分の時点で2回目を回しました。この2回目で438,146点が出ていて、もう作問者の解を超えています。SolとAstraは5分前後の間隔でベンチを回しながら、15回かけて少しずつ点を上げていきました。
-
-## おまけ: ISUCON14とISUCON13
-
-ISUCON14とISUCON13の結果は、公開解が学習データに含まれうるので、スコアには入れずおまけとして載せています。上の画像の下半分と、[README](https://github.com/trasta298/isu-bench/blob/main/README.ja.md#おまけ-isucon14とisucon13) にあります。
+ISUCON14とISUCON13の結果は、公開解が学習データに含まれうるので、isu-benchスコアには入れずにおまけとして載せています。上の画像の下半分と、[README](https://github.com/trasta298/isu-bench/blob/main/README.ja.md#おまけ-isucon14とisucon13) にあります。ISUCON14ではAstraが592,820点を出していて、これは本番の優勝点58,153点の約10倍です。
 
 ## 費用
 
