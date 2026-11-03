@@ -53,9 +53,9 @@ export function AboutPage({ locale }: { locale: Locale }) {
           <h2>{dict.about.links.title}</h2>
           <ul className="about__links">
             <li>
-              <a href="https://x.com/tra_sta" target="_blank" rel="noopener noreferrer" className="bare">
+              <a href="https://x.com/trasta" target="_blank" rel="noopener noreferrer" className="bare">
                 <span className="about__link-key">{dict.about.links.xLabel}</span>
-                <span>@tra_sta</span>
+                <span>@trasta</span>
               </a>
             </li>
             <li>

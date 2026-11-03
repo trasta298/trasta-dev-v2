@@ -42,7 +42,7 @@ import は要らない。
 
 - `<Callout type="note">…</Callout>`: 本文を AI に書かせた記事は、冒頭に「この記事の文章は Claude に書かせて加筆修正しています」の注記を置く（英語版は「The text of this article was drafted by Claude and then edited by me.」）。
 - `<LinkCard href="…" title="…" description="…" site="github.com" />`: 記事の主役のリポジトリや外部記事を、本文の早いところで 1 枚だけ出す。
-- `<XPost id="…" user="trasta" />`: X の投稿を埋め込む。X のアカウントは `@trasta`（古い記事の `tra_sta` は旧アカウント名）。
+- `<XPost id="…" user="trasta" />`: X の投稿を埋め込む。X のアカウントは `@trasta`。
 
 ### Markdown の注意
 

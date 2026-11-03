@@ -12,7 +12,7 @@ const COMMON = {
   domain: 'trasta.dev',
   url: 'https://trasta.dev',
   author: 'trasta',
-  twitter: '@tra_sta',
+  twitter: '@trasta',
 } as const
 
 export const SITE = {
