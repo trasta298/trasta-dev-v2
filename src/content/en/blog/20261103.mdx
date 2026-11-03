@@ -90,7 +90,7 @@ The isu-bench score is the final ISUMAIL score divided by its estimated theoreti
 
 | agent | model | effort | isu-bench score | final | agent time | output tokens |
 |---|---|---|---:|---:|---:|---:|
-| Claude Code | claude-opus-5-5 | high | **49.5%** | 505,329 | 159 min | 325,625 |
+| Claude Code | claude-opus-5-5 | high | **49.5%** | 505,329 | 138 min | 325,625 |
 | Codex | gpt-6.1-sol | xhigh | 23.4% | 238,875 | 73 min | 93,841 |
 | Codex | gpt-6-astra | xhigh | 13.2% | 135,079 | 74 min | 87,471 |
 | DeepSeek Harness | deepseek-v4.1-flash:1017 | max | 4.1% | 41,791 | 74 min | 235,222 |
@@ -103,7 +103,7 @@ Public solutions of ISUCON14 and ISUCON13 may be in the training data, so their 
 
 The limit here is the number of benchmark runs, not time, and it was fun to see each model use its 15 runs differently.
 
-Opus tries to land a big change first. It ran its first benchmark 3 minutes in, then worked for about 40 minutes without running another, and jumped from 2,046 to 438,146 on the second run. The third run failed, and from the fourth on it crept up between 470,000 and 510,000.
+Opus tries to land a big change first. It ran its first benchmark about a minute in, then worked for about 40 minutes without running another, and jumped from 2,046 to 438,146 on the second run. The third run failed, and from the fourth on it crept up between 470,000 and 510,000.
 
 Astra does nothing of the sort and just keeps spending runs. It ran the benchmark about every 5 minutes and, with two FAILs along the way, raised its score little by little (32,749, 45,873, 55,941, ...) to 135,079 on the 15th run. Sol likewise ran about every 5 minutes.
 
