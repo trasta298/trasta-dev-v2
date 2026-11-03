@@ -22,7 +22,7 @@ tags: ["ISUCON","Claude Code","Codex"]
 
 ## 作ったきっかけ
 
-isu-bench は10月31日のISUCON2026本番に向けて、どのモデルに任せるかを決めるために作っていたものです。練習では明らかにOpusが良さそうだったのに、なぜか本番ではAstraを使って爆死しました。
+isu-bench は10月31日のISUCON2026本番に向けて、どのモデルに任せるかを決めるために作っていたものです。ちなみに、練習では明らかにOpusが良さそうだったのに、なぜか本番ではAstraを使って爆死しました。
 
 ISUCON2026の問題が良く、取り入れるべき要素があったので、本番の後に問題を改良してから公開しました。Astra 6.2 や Fable 5.5 の噂も出ているので、新しいモデルが出たらすぐ測れるようにしておきたい、というモチベーションもかなりありました。
 
@@ -44,9 +44,9 @@ ISUMAILはニュースレターの配信サービスで、予約時刻になる�
 
 ISUMAILにはISUCON2026から取り入れた要素も入っています。
 
-学習データに入らないよう、ソース（参照実装、ベンチマーカー、仕様、作問者の解）はGitHubに上げず、公開AMIでだけ配布しています。なので、この記事でも問題の中身はREADMEに書いた以上には触れません。
+学習データに入らないよう、ソース（参照実装、ベンチマーカー、データ生成器、仕様）はGitHubに上げず、公開AMIでだけ配布しています。なので、この記事でも問題の中身はREADMEに書いた以上には触れません。
 
-問題の設計、参照実装、ベンチマーカー、作問者の解は、すべてClaudeとCodexに作らせました。subagentとCodexにISUCONの問題としての完成度をレビューさせながら進めています。正直、苦労したところは特になく、AIに簡単に作らせられました。すごい時代だなぁ。
+問題の設計、参照実装、ベンチマーカーは、すべてClaudeとCodexに作らせました。subagentとCodexにISUCONの問題としての完成度をレビューさせながら進めています。正直、苦労したところは特になく、AIに簡単に作らせられました。すごい時代だなぁ。
 
 ## プロンプトは最適化していない
 
@@ -88,16 +88,16 @@ No one will answer questions. Work autonomously until you have used all 15 runs.
 
 ![isu-bench v1 の結果](/images/blog/isu-bench-v1.ja.png)
 
-isu-benchスコアはISUMAILの最終点を作問者の解の327,660点で割った値です。言語はGoで、1構成につき1回だけ試しています。
+isu-benchスコアはISUMAILの最終点を、理論上の上限の見積もり（1,020,000点）で割った値です。言語はGoで、1構成につき1回だけ試しています。
 
 | エージェント | モデル | effort | isu-benchスコア | 最終点 | 作業時間 | 出力トークン |
 |---|---|---|---:|---:|---:|---:|
-| Claude Code | claude-opus-5-5 | high | **154%** | 505,329 | 159分 | 325,625 |
-| Codex | gpt-6.1-sol | xhigh | 73% | 238,875 | 73分 | 93,841 |
-| Codex | gpt-6-astra | xhigh | 41% | 135,079 | 74分 | 87,471 |
-| DeepSeek Harness | deepseek-v4.1-flash:1017 | max | 13% | 41,791 | 74分 | 235,222 |
+| Claude Code | claude-opus-5-5 | high | **49.5%** | 505,329 | 159分 | 325,625 |
+| Codex | gpt-6.1-sol | xhigh | 23.4% | 238,875 | 73分 | 93,841 |
+| Codex | gpt-6-astra | xhigh | 13.2% | 135,079 | 74分 | 87,471 |
+| DeepSeek Harness | deepseek-v4.1-flash:1017 | max | 4.1% | 41,791 | 74分 | 235,222 |
 
-作問者の解を超えたのはOpusだけで、その下はSol、Astra、DeepSeekの順で、隣どうしで2〜3倍ほど点が離れました。本番で使ったAstraは41%でした。
+いちばん高いOpusでも上限の約半分で、その下はSol、Astra、DeepSeekの順に、隣どうしで2〜3倍ほど点が離れました。本番で使ったAstraは13.2%でした。
 
 ISUCON14とISUCON13の結果は、公開解が学習データに含まれうるので、isu-benchスコアには入れずにおまけとして載せています。上の画像の下半分と、[README](https://github.com/trasta298/isu-bench/blob/main/README.ja.md#おまけ-isucon14とisucon13) にあります。ISUCON14ではAstraが592,820点を出していて、これは本番の優勝点58,153点の約10倍です。
 
