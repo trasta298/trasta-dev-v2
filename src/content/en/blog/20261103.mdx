@@ -22,9 +22,9 @@ Score charts for every run are at [isu-bench.trasta.dev](https://isu-bench.trast
 
 ## Why I built it
 
-Before the ISUCON2026 contest on October 31, I compared models on past problems to decide which one to hand the contest to. In practice Opus clearly looked better, yet for some reason I went with Astra on the day and crashed and burned.
+I built isu-bench for the ISUCON2026 contest on October 31, to decide which model to hand the contest to. In practice Opus clearly looked better, yet for some reason I went with Astra on the day and crashed and burned.
 
-After the contest, I rebuilt that comparison so anyone can run it under the same conditions, and that became isu-bench. There are also rumors of Astra 6.2 and Fable 5.5, and a big motivation was being ready to measure new models as soon as they come out.
+ISUCON2026 was a good problem with elements worth taking in, so after the contest I improved the problem before publishing it. There are also rumors of Astra 6.2 and Fable 5.5, and a big motivation was being ready to measure new models as soon as they come out.
 
 ## Rules
 
@@ -42,7 +42,7 @@ I first measured on ISUCON14 and ISUCON13. But both problems are old, and the mo
 
 ISUMAIL is a newsletter delivery service: at the scheduled time it renders each subscriber's copy and hands it to an external mail provider. The provider requires a proof-of-work stamp per mail and keeps a reputation per sending server. The three servers differ in CPU architecture, speed and memory, and all traffic between them goes through a router that limits bandwidth.
 
-ISUMAIL also takes in elements of ISUCON2026, which came up in the contest.
+ISUMAIL also includes elements taken from ISUCON2026.
 
 To keep it out of training data, the source (reference implementation, benchmarker, specification and the author's solution) is not on GitHub and ships only as public AMIs. So this post does not go into the problem any further than the README does.
 
