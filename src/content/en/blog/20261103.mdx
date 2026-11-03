@@ -42,8 +42,6 @@ I first measured on ISUCON14 and ISUCON13. But both problems are old, and the mo
 
 ISUMAIL is a newsletter delivery service: at the scheduled time it renders each subscriber's copy and hands it to an external mail provider. The provider requires a proof-of-work stamp per mail and keeps a reputation per sending server. The three servers differ in CPU architecture, speed and memory, and all traffic between them goes through a router that limits bandwidth.
 
-ISUMAIL also includes elements taken from ISUCON2026.
-
 To keep it out of training data, the source (reference implementation, benchmarker, data generator and specification) is not on GitHub and ships only as public AMIs. So this post does not go into the problem any further than the README does.
 
 The problem design, reference implementation and benchmarker were all made by Claude and Codex. I had subagents and Codex review it for how well it works as an ISUCON problem along the way. Honestly, nothing was particularly hard; the AI built it with ease. What times we live in.
@@ -101,6 +99,14 @@ Even Opus, the highest, reached only about half of the theoretical maximum. Belo
 
 Public solutions of ISUCON14 and ISUCON13 may be in the training data, so their results are kept as extras outside the isu-bench score. They are in the lower half of the chart above and in the [README](https://github.com/trasta298/isu-bench#extras-isucon14-and-isucon13). On ISUCON14, Astra scored 592,820, about 10 times the contest winner's 58,153.
 
+## How each model plays it
+
+The limit here is the number of benchmark runs, not time, and it was fun to see each model use its 15 runs differently.
+
+Opus tries to land a big change first. It ran its first benchmark 3 minutes in, then worked for about 40 minutes without running another, and jumped from 2,046 to 438,146 on the second run. The third run failed, and from the fourth on it crept up between 470,000 and 510,000.
+
+Astra does nothing of the sort and just keeps spending runs. It ran the benchmark about every 5 minutes and, with two FAILs along the way, raised its score little by little (32,749, 45,873, 55,941, ...) to 135,079 on the 15th run. Sol likewise ran about every 5 minutes.
+
 ## Cost
 
 One ISUMAIL run costs about $0.64 per hour in EC2. The four trials here came to about $4.2 in total: about $1.7 for Opus and about $0.8 each for the others. Including trial runs while making the problem and the ISUCON14 and 13 runs, November 1 and 2 cost about $17.
@@ -109,6 +115,6 @@ For the models, Claude Code and Codex ran on their subscription logins, and Deep
 
 ## Adding models and donations
 
-I plan to measure Astra 6.2 and Fable 5.5 when they come out. If there is another model or agent you want measured, please ask in an [isu-bench issue](https://github.com/trasta298/isu-bench/issues).
+I plan to measure Astra 6.2 and Fable 5.5 when they come out. If there is another model or agent you want measured, please reach out to [@trasta](https://x.com/trasta) on X.
 
 Every run costs money, so donations would make me very happy.
